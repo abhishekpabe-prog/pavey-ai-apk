@@ -1,290 +1,416 @@
-<!-- ========================================= -->
-<!-- UPLOAD PRODUCT SECTION -->
-<!-- ========================================= -->
+/* ==========================================
+   AI PRODUCT STUDIO
+   STYLE.CSS - PART 1
+========================================== */
 
-<section class="upload-section" id="upload">
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-<div class="section-title">
+html{
+    scroll-behavior:smooth;
+}
 
-<span>STEP 01</span>
+body{
+    font-family:'Poppins',sans-serif;
+    background:#f5f9ff;
+    color:#222;
+    overflow-x:hidden;
+}
 
-<h2>Upload Your Product</h2>
+img{
+    width:100%;
+    display:block;
+}
 
-<p>Take a photo or upload from your gallery.</p>
+a{
+    text-decoration:none;
+}
 
-</div>
+section{
+    padding:90px 8%;
+}
 
-<div class="upload-container">
+/* ==========================
+HEADER
+========================== */
 
-<div class="upload-box">
+header{
 
-<i class="fa-solid fa-cloud-arrow-up"></i>
+position:fixed;
 
-<h3>Drop Product Image Here</h3>
+top:0;
 
-<p>PNG • JPG • WEBP</p>
+left:0;
 
-<button class="upload-btn">
+width:100%;
 
-Upload Image
+padding:18px 8%;
 
-</button>
+display:flex;
 
-</div>
+justify-content:space-between;
 
-<div class="upload-info">
+align-items:center;
 
-<h3>Supported Categories</h3>
+background:#ffffffee;
 
-<ul>
+backdrop-filter:blur(15px);
 
-<li>👕 Fashion</li>
+z-index:1000;
 
-<li>💄 Cosmetics</li>
+box-shadow:0 5px 18px rgba(0,0,0,.05);
 
-<li>📱 Electronics</li>
+}
 
-<li>⌚ Watches</li>
+.logo{
 
-<li>👟 Shoes</li>
+display:flex;
 
-<li>🥤 Food Products</li>
+align-items:center;
 
-</ul>
+gap:12px;
 
-</div>
+font-size:24px;
 
-</div>
+font-weight:700;
 
-</section>
+color:#2563eb;
 
+}
 
+.logo i{
 
-<!-- ========================================= -->
-<!-- PRODUCT DETAILS -->
-<!-- ========================================= -->
+font-size:30px;
 
-<section class="product-details">
+}
 
-<div class="section-title">
+nav{
 
-<span>STEP 02</span>
+display:flex;
 
-<h2>Product Information</h2>
+gap:35px;
 
-<p>Fill product details before AI generation.</p>
+}
 
-</div>
+nav a{
 
-<div class="form-grid">
+font-size:16px;
 
-<input type="text" placeholder="Product Name">
+font-weight:500;
 
-<input type="number" placeholder="Price">
+color:#444;
 
-<input type="text" placeholder="Brand">
+transition:.3s;
 
-<input type="text" placeholder="Category">
+}
 
-<input type="text" placeholder="Color">
+nav a:hover{
 
-<input type="text" placeholder="Size">
+color:#2563eb;
 
-<textarea placeholder="Product Description"></textarea>
+}
 
-<button class="generate-btn">
+.header-btn{
 
-Generate With AI
+display:flex;
 
-</button>
+gap:15px;
 
-</div>
+}
 
-</section>
+.login-btn{
 
+padding:11px 26px;
 
+border-radius:40px;
 
-<!-- ========================================= -->
-<!-- AI PROCESS -->
-<!-- ========================================= -->
+border:2px solid #2563eb;
 
-<section class="ai-process">
+color:#2563eb;
 
-<div class="section-title">
+font-weight:600;
 
-<span>STEP 03</span>
+transition:.3s;
 
-<h2>AI Processing</h2>
+}
 
-<p>Your product is now being optimized.</p>
+.login-btn:hover{
 
-</div>
+background:#2563eb;
 
-<div class="process-grid">
+color:white;
 
-<div class="process-card">
+}
 
-<i class="fa-solid fa-image"></i>
+.start-btn{
 
-<h3>Image Enhancement</h3>
+padding:12px 30px;
 
-<div class="progress">
+border-radius:40px;
 
-<div class="bar w90"></div>
+background:linear-gradient(135deg,#2563eb,#3b82f6);
 
-</div>
+color:white;
 
-</div>
+font-weight:600;
 
-<div class="process-card">
+box-shadow:0 15px 35px rgba(37,99,235,.35);
 
-<i class="fa-solid fa-scissors"></i>
+transition:.35s;
 
-<h3>Background Removal</h3>
+}
 
-<div class="progress">
+.start-btn:hover{
 
-<div class="bar w100"></div>
+transform:translateY(-4px);
 
-</div>
+}
 
-</div>
+/* ==========================
+HERO SECTION
+========================== */
 
-<div class="process-card">
+.hero{
 
-<i class="fa-solid fa-pen"></i>
+display:grid;
 
-<h3>SEO Description</h3>
+grid-template-columns:1fr 1fr;
 
-<div class="progress">
+align-items:center;
 
-<div class="bar w95"></div>
+gap:60px;
 
-</div>
+padding-top:170px;
 
-</div>
+}
 
-<div class="process-card">
+.hero h5{
 
-<i class="fa-solid fa-tags"></i>
+display:inline-block;
 
-<h3>Keywords</h3>
+padding:10px 18px;
 
-<div class="progress">
+background:#e8f1ff;
 
-<div class="bar w80"></div>
+color:#2563eb;
 
-</div>
+border-radius:50px;
 
-</div>
+font-size:15px;
 
-<div class="process-card">
+margin-bottom:25px;
 
-<i class="fa-solid fa-camera"></i>
+}
 
-<h3>Studio Product Image</h3>
+.hero h1{
 
-<div class="progress">
+font-size:62px;
 
-<div class="bar w100"></div>
+font-weight:700;
 
-</div>
+line-height:1.1;
 
-</div>
+margin-bottom:25px;
 
-<div class="process-card">
+}
 
-<i class="fa-solid fa-store"></i>
+.hero p{
 
-<h3>Shopify Ready</h3>
+font-size:18px;
 
-<div class="progress">
+line-height:1.9;
 
-<div class="bar w100"></div>
+color:#666;
 
-</div>
+margin-bottom:35px;
 
-</div>
+max-width:580px;
 
-</div>
+}
 
-</section>
+.hero-buttons{
 
+display:flex;
 
+gap:20px;
 
-<!-- ========================================= -->
-<!-- AI RESULT -->
-<!-- ========================================= -->
+margin-bottom:50px;
 
-<section class="result-section">
+}
 
-<div class="section-title">
+.primary-btn{
 
-<span>STEP 04</span>
+padding:18px 40px;
 
-<h2>AI Generated Result</h2>
+background:#2563eb;
 
-<p>Review everything before publishing.</p>
+color:white;
 
-</div>
+border-radius:50px;
 
-<div class="result-grid">
+font-weight:600;
 
-<div class="result-image">
+box-shadow:0 15px 30px rgba(37,99,235,.30);
 
-<img src="assets/images/product.png"
-alt="Generated Product">
+transition:.3s;
 
-</div>
+}
 
-<div class="result-content">
+.primary-btn:hover{
 
-<h3>
+transform:translateY(-4px);
 
-Premium Cotton T-Shirt
+}
 
-</h3>
+.secondary-btn{
 
-<h4>
+padding:18px 40px;
 
-₹699
+background:white;
 
-</h4>
+border:2px solid #2563eb;
 
-<p>
+border-radius:50px;
 
-Premium quality cotton t-shirt with breathable
-fabric, modern fit and soft material suitable
-for everyday wear.
+color:#2563eb;
 
-</p>
+font-weight:600;
 
-<h5>
+transition:.3s;
 
-SEO Keywords</h5>
+}
 
-<div class="tags">
+.secondary-btn:hover{
 
-<span>Cotton</span>
+background:#2563eb;
 
-<span>T-Shirt</span>
+color:white;
 
-<span>Fashion</span>
+}
 
-<span>Men</span>
+/* ==========================
+STATS
+========================== */
 
-<span>Premium</span>
+.hero-stats{
 
-</div>
+display:flex;
 
-<button class="publish-btn">
+gap:35px;
 
-Continue To Publish
+}
 
-</button>
+.hero-stats div{
 
-</div>
+background:white;
 
-</div>
+padding:25px;
 
-</section>
+border-radius:18px;
+
+box-shadow:0 12px 30px rgba(0,0,0,.06);
+
+min-width:140px;
+
+text-align:center;
+
+}
+
+.hero-stats h2{
+
+font-size:34px;
+
+color:#2563eb;
+
+margin-bottom:10px;
+
+}
+
+.hero-stats p{
+
+font-size:15px;
+
+margin:0;
+
+color:#666;
+
+}
+
+/* ==========================
+PHONE MOCKUP
+========================== */
+
+.phone{
+
+background:white;
+
+padding:18px;
+
+border-radius:35px;
+
+box-shadow:0 35px 80px rgba(0,0,0,.18);
+
+max-width:420px;
+
+margin:auto;
+
+transition:.4s;
+
+}
+
+.phone:hover{
+
+transform:translateY(-10px);
+
+}
+
+.phone img{
+
+border-radius:22px;
+
+}
+
+/* ==========================
+SECTION TITLE
+========================== */
+
+.section-title{
+
+text-align:center;
+
+margin-bottom:60px;
+
+}
+
+.section-title span{
+
+color:#2563eb;
+
+font-weight:600;
+
+letter-spacing:2px;
+
+}
+
+.section-title h2{
+
+font-size:48px;
+
+margin:18px 0;
+
+}
+
+.section-title p{
+
+font-size:18px;
+
+color:#666;
+
+max-width:700px;
+
+margin:auto;
+
+}
