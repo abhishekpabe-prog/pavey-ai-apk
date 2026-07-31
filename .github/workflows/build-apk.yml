@@ -28,6 +28,9 @@ jobs:
           npm install
           npm install @capacitor/android@5
 
+      - name: Build Web App
+        run: npm run build || true
+
       - name: Add Capacitor Android
         run: |
           npx cap add android || true
