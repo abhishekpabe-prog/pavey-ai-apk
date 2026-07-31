@@ -4,168 +4,233 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Product AI</title>
-    <!-- Using Google Fonts for that premium look -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body { margin: 0; padding: 0; font-family: 'Inter', sans-serif; background-color: #f5f7fa; color: #111827; }
-        
-        /* Universal App Container */
-        .app-container { height: 100vh; overflow-y: auto; padding-bottom: 70px; }
+        body { margin: 0; padding: 0; font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #0f172a; }
         .hidden { display: none !important; }
+        .screen { height: 100vh; overflow-y: auto; background-color: #f8fafc; }
 
-        /* --- 1. SPLASH SCREEN --- */
+        /* =========================================
+           1. NEW SPLASH SCREEN (Exact Match)
+           ========================================= */
         #splash-screen {
-            height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
-            background: linear-gradient(135deg, #0f172a, #1e1b4b); color: white; padding-bottom: 0;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            /* Dark Purple to Deep Dark background */
+            background: radial-gradient(circle at center, #2e1065 0%, #090514 100%); 
+            color: white; position: relative; z-index: 9999;
         }
-        .logo-box {
-            background: rgba(255,255,255,0.1); padding: 20px; border-radius: 20px;
-            font-size: 50px; margin-bottom: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        
+        /* 3D Glowing AI Bag Logo made entirely with CSS */
+        .splash-logo-wrapper { position: relative; margin-bottom: 25px; }
+        .splash-bag {
+            width: 85px; height: 95px;
+            background: linear-gradient(135deg, #a855f7, #6366f1);
+            border-radius: 18px 18px 14px 14px;
+            display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 15px 35px rgba(139, 92, 246, 0.5), inset 0 8px 20px rgba(255,255,255,0.4);
+            position: relative; z-index: 2;
         }
-        .splash-title { font-size: 28px; font-weight: 700; margin: 0; }
-        .splash-subtitle { font-size: 14px; color: #94a3b8; margin-top: 5px; }
-        .loader {
-            width: 150px; height: 4px; background: rgba(255,255,255,0.2); margin-top: 50px; border-radius: 4px; overflow: hidden;
+        /* Bag Handle */
+        .splash-bag::before {
+            content: ''; position: absolute; top: -22px; width: 40px; height: 40px;
+            border: 6px solid #8b5cf6; border-radius: 50%; z-index: -1;
         }
-        .loader-bar { width: 50%; height: 100%; background: #6366f1; border-radius: 4px; animation: load 2s infinite ease-in-out; }
-        @keyframes load { 0% { transform: translateX(-100%); } 100% { transform: translateX(200%); } }
+        .splash-bag span { color: white; font-size: 36px; font-weight: 800; text-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+        
+        /* Sparkles Effect */
+        .sparkle { position: absolute; color: #e9d5ff; text-shadow: 0 0 10px white; animation: twinkle 1.5s infinite alternate; z-index: 3;}
+        .sparkle.s1 { top: -10px; right: -25px; font-size: 30px; }
+        .sparkle.s2 { top: 40px; right: -35px; font-size: 18px; }
+        @keyframes twinkle { 0% { opacity: 0.4; transform: scale(0.8); } 100% { opacity: 1; transform: scale(1.2); } }
 
-        /* --- 2. HOME DASHBOARD --- */
+        /* Typography */
+        .splash-title {
+            font-size: 34px; font-weight: 800; margin: 0;
+            background: linear-gradient(90deg, #e9d5ff, #a855f7);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .splash-subtitle { font-size: 15px; color: #f1f5f9; margin-top: 8px; font-weight: 400; }
+
+        /* Loading Bar Section at the Bottom */
+        .loading-container { position: absolute; bottom: 12%; width: 55%; display: flex; flex-direction: column; align-items: center; }
+        .loading-text { font-size: 14px; color: #e2e8f0; margin-bottom: 12px; }
+        .loader { width: 100%; height: 6px; background: rgba(255,255,255,0.15); border-radius: 10px; overflow: hidden; }
+        .loader-bar {
+            width: 0%; height: 100%; border-radius: 10px;
+            background: linear-gradient(90deg, #8b5cf6, #c084fc);
+            box-shadow: 0 0 12px #8b5cf6;
+            animation: loadBar 2s ease-out forwards;
+        }
+        @keyframes loadBar { 0% { width: 0%; } 100% { width: 100%; } }
+
+        /* =========================================
+           2. DASHBOARD SCREEN (From previous step)
+           ========================================= */
+        #dashboard-screen { padding-bottom: 80px; }
         .header { padding: 20px; display: flex; justify-content: space-between; align-items: center; background: white; }
-        .header-title { font-size: 20px; font-weight: 700; }
-        .header-icon { font-size: 22px; color: #4b5563; }
-
+        .header-title { font-size: 18px; font-weight: 700; }
         .dashboard-content { padding: 20px; }
         .welcome-sec h1 { font-size: 24px; margin: 0; font-weight: 700; }
-        .welcome-sec p { font-size: 14px; color: #6b7280; margin: 5px 0 20px 0; }
-
-        /* Big CTA Button */
+        .welcome-sec p { font-size: 14px; color: #64748b; margin: 5px 0 20px 0; }
         .create-btn {
-            background: linear-gradient(135deg, #4f46e5, #3b82f6); color: white;
-            padding: 20px; border-radius: 16px; display: flex; justify-content: space-between; align-items: center;
-            box-shadow: 0 10px 20px rgba(79, 70, 229, 0.3); cursor: pointer; margin-bottom: 25px;
+            background: linear-gradient(135deg, #4f46e5, #3b82f6); color: white; padding: 20px; border-radius: 16px; 
+            display: flex; justify-content: space-between; align-items: center; box-shadow: 0 10px 20px rgba(79, 70, 229, 0.25); cursor: pointer; margin-bottom: 25px; transition: 0.2s;
         }
         .create-btn:active { transform: scale(0.98); }
         .create-btn h2 { margin: 0; font-size: 18px; font-weight: 600; }
         .create-btn p { margin: 5px 0 0 0; font-size: 13px; opacity: 0.9; }
         .plus-icon { background: rgba(255,255,255,0.2); width: 40px; height: 40px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; }
-
-        /* Recent Products */
         .section-title { font-size: 16px; font-weight: 700; margin-bottom: 15px; display: flex; justify-content: space-between; }
-        .view-all { color: #4f46e5; font-size: 13px; font-weight: 600; }
-        
-        .product-card {
-            background: white; padding: 15px; border-radius: 12px; display: flex; align-items: center;
-            margin-bottom: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.02);
-        }
-        .product-icon { width: 50px; height: 50px; background: #f3f4f6; border-radius: 8px; display: flex; justify-content: center; align-items: center; font-size: 24px; margin-right: 15px; }
-        .product-info flex { 1; }
-        .product-info h4 { margin: 0; font-size: 15px; }
-        .product-info p { margin: 3px 0 0 0; font-size: 13px; color: #6b7280; }
+        .product-card { background: white; padding: 15px; border-radius: 12px; display: flex; align-items: center; margin-bottom: 10px; }
+        .product-icon { width: 50px; height: 50px; background: #f1f5f9; border-radius: 8px; display: flex; justify-content: center; align-items: center; font-size: 24px; margin-right: 15px; }
+        .product-info h4 { margin: 0; font-size: 15px; font-weight: 600;}
         .status-badge { background: #dcfce7; color: #166534; padding: 3px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; margin-top: 5px; display: inline-block; }
-
-        /* --- 3. BOTTOM NAVIGATION --- */
-        .bottom-nav {
-            position: fixed; bottom: 0; width: 100%; background: white; padding: 12px 0;
-            display: flex; justify-content: space-around; box-shadow: 0 -4px 10px rgba(0,0,0,0.05);
-            border-top-left-radius: 20px; border-top-right-radius: 20px; z-index: 1000;
-        }
-        .nav-item { text-align: center; color: #9ca3af; font-size: 11px; font-weight: 600; display: flex; flex-direction: column; align-items: center; cursor: pointer; }
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: white; padding: 12px 0; display: flex; justify-content: space-around; box-shadow: 0 -4px 10px rgba(0,0,0,0.05); }
+        .nav-item { text-align: center; color: #94a3b8; font-size: 11px; font-weight: 600; cursor: pointer; }
         .nav-item.active { color: #4f46e5; }
         .nav-icon { font-size: 22px; margin-bottom: 4px; }
+
+        /* =========================================
+           3. UPLOAD SCREEN (From previous step)
+           ========================================= */
+        #upload-screen { background: white; }
+        .upload-header { padding: 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; }
+        .back-btn { font-size: 20px; cursor: pointer; color: #0f172a; padding: 5px; }
+        .upload-header-title { font-size: 16px; font-weight: 600; }
+        .upload-container { padding: 20px; }
+        .dashed-upload-box {
+            border: 2px dashed #cbd5e1; border-radius: 16px; padding: 40px 20px; text-align: center;
+            background: #f8fafc; margin-bottom: 25px; cursor: pointer; transition: 0.2s;
+        }
+        .dashed-upload-box:active { background: #f1f5f9; border-color: #94a3b8; }
+        .upload-blue-icon { font-size: 40px; margin-bottom: 15px; color: #3b82f6; }
+        .dashed-upload-box h3 { margin: 0 0 5px 0; font-size: 16px; font-weight: 600; }
+        .dashed-upload-box p { margin: 0; font-size: 13px; color: #64748b; }
+        #img-preview-box { display: none; margin-bottom: 25px; position: relative; }
+        #preview-image { width: 100%; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); object-fit: cover; max-height: 350px; }
+        .change-photo-btn { position: absolute; bottom: 15px; right: 15px; background: rgba(0,0,0,0.6); color: white; padding: 8px 15px; border-radius: 20px; font-size: 12px; backdrop-filter: blur(5px); }
+        .action-buttons { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 30px; }
+        .action-btn { flex: 1; background: white; border: 1px solid #e2e8f0; padding: 15px 10px; border-radius: 12px; text-align: center; font-size: 13px; font-weight: 500; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
+        .action-btn-icon { font-size: 24px; margin-bottom: 8px; }
+        .tip-box { background: #eff6ff; padding: 15px; border-radius: 12px; display: flex; align-items: flex-start; gap: 12px; }
+        .tip-box span { font-size: 20px; }
+        .tip-box p { margin: 0; font-size: 13px; color: #1e3a8a; line-height: 1.5; }
+        .next-btn { background: #0f172a; color: white; width: 100%; padding: 16px; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; margin-top: 30px; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <!-- SPLASH SCREEN -->
-    <div id="splash-screen">
-        <div class="logo-box">🛍️</div>
+    <!-- 1. SPLASH SCREEN (Updates Here) -->
+    <div id="splash-screen" class="screen">
+        <div class="splash-logo-wrapper">
+            <div class="splash-bag">
+                <span>AI</span>
+            </div>
+            <div class="sparkle s1">✦</div>
+            <div class="sparkle s2">✦</div>
+        </div>
         <h1 class="splash-title">Product AI</h1>
         <p class="splash-subtitle">Sell Smart, Sell More!</p>
-        <div class="loader"><div class="loader-bar"></div></div>
+        
+        <div class="loading-container">
+            <div class="loading-text">Loading...</div>
+            <div class="loader"><div class="loader-bar"></div></div>
+        </div>
     </div>
 
-    <!-- MAIN APP CONTAINER -->
-    <div id="main-app" class="app-container hidden">
-        
-        <!-- HEADER -->
+    <!-- 2. DASHBOARD SCREEN -->
+    <div id="dashboard-screen" class="screen hidden">
         <div class="header">
-            <div class="header-icon">≡</div>
-            <div class="header-title">Product AI</div>
-            <div class="header-icon">🔔</div>
+            <div style="font-size: 24px;">≡</div>
+            <div class="header-title">AI Product Studio</div>
+            <div style="font-size: 20px;">🔔</div>
         </div>
-
-        <!-- DASHBOARD CONTENT -->
         <div class="dashboard-content">
             <div class="welcome-sec">
                 <h1>Welcome back! 👋</h1>
                 <p>Let's create something amazing today.</p>
             </div>
-
-            <!-- Main CTA (Will trigger Upload Screen later) -->
-            <div class="create-btn" onclick="alert('Proceeding to Upload Screen...')">
-                <div>
-                    <h2>New Product</h2>
-                    <p>Create a new product with AI</p>
-                </div>
+            <div class="create-btn" onclick="openUploadScreen()">
+                <div><h2>New Product</h2><p>Create a new product with AI</p></div>
                 <div class="plus-icon">+</div>
             </div>
-
-            <!-- Recent Products List -->
-            <div class="section-title">
-                <span>Recent Products</span>
-                <span class="view-all">View All</span>
-            </div>
-
+            <div class="section-title"><span>Recent Products</span><span style="color: #4f46e5; font-size: 13px;">View All</span></div>
             <div class="product-card">
                 <div class="product-icon">🎧</div>
-                <div class="product-info">
-                    <h4>Wireless Headphones</h4>
-                    <p>$59.99</p>
-                    <div class="status-badge">Published</div>
-                </div>
+                <div><h4 style="margin: 0; font-size: 15px;">Wireless Headphones</h4><p style="margin: 3px 0 0 0; font-size: 13px; color: #64748b;">$59.99</p><div class="status-badge">Published</div></div>
             </div>
-
-            <div class="product-card">
-                <div class="product-icon">⌚</div>
-                <div class="product-info">
-                    <h4>Smart Watch Pro</h4>
-                    <p>$89.99</p>
-                    <div style="background: #fef9c3; color: #854d0e;" class="status-badge">Draft</div>
-                </div>
-            </div>
-
         </div>
-
-        <!-- BOTTOM NAVIGATION BAR -->
         <div class="bottom-nav">
-            <div class="nav-item active">
-                <div class="nav-icon">🏠</div>
-                <span>Home</span>
-            </div>
-            <div class="nav-item">
-                <div class="nav-icon">📦</div>
-                <span>Products</span>
-            </div>
-            <div class="nav-item">
-                <div class="nav-icon">📊</div>
-                <span>Analytics</span>
-            </div>
-            <div class="nav-item">
-                <div class="nav-icon">👤</div>
-                <span>Profile</span>
-            </div>
+            <div class="nav-item active"><div class="nav-icon">🏠</div>Home</div>
+            <div class="nav-item"><div class="nav-icon">📦</div>Products</div>
+            <div class="nav-item"><div class="nav-icon">📊</div>Analytics</div>
+            <div class="nav-item"><div class="nav-icon">👤</div>Profile</div>
         </div>
-
     </div>
 
-    <!-- MAGIC JAVASCRIPT -->
+    <!-- 3. UPLOAD SCREEN -->
+    <div id="upload-screen" class="screen hidden">
+        <div class="upload-header">
+            <div class="back-btn" onclick="closeUploadScreen()">←</div>
+            <div class="upload-header-title">Upload Product</div>
+            <div style="width: 20px;"></div> 
+        </div>
+        <div class="upload-container">
+            <input type="file" id="nativeCamera" accept="image/*" style="display: none;" onchange="handleImage(event)">
+            <div id="dashed-box" class="dashed-upload-box" onclick="document.getElementById('nativeCamera').click()">
+                <div class="upload-blue-icon">📷</div>
+                <h3>Upload Product Image</h3>
+                <p>Drag & drop or tap to upload</p>
+            </div>
+            <div id="img-preview-box">
+                <img id="preview-image" src="" alt="Product Preview">
+                <div class="change-photo-btn" onclick="document.getElementById('nativeCamera').click()">🔄 Change</div>
+            </div>
+            <div class="action-buttons">
+                <div class="action-btn" onclick="document.getElementById('nativeCamera').click()"><div class="action-btn-icon">📸</div> Camera</div>
+                <div class="action-btn" onclick="document.getElementById('nativeCamera').click()"><div class="action-btn-icon">🖼️</div> Gallery</div>
+                <div class="action-btn" onclick="alert('Voice recognition starting...')"><div class="action-btn-icon">🎙️</div> Voice Input</div>
+            </div>
+            <div class="tip-box">
+                <span>💡</span>
+                <p><strong>Tip:</strong> For best results, upload a clear photo with good lighting and a plain background.</p>
+            </div>
+            <button class="next-btn" onclick="alert('Proceeding to Product Details...')">Continue to Details →</button>
+        </div>
+    </div>
+
     <script>
-        // Splash screen ko 2.5 seconds ke baad hide karke dashboard show karna
-        setTimeout(function() {
+        // EXACTLY 2 Seconds Splash Screen Logic
+        setTimeout(() => {
             document.getElementById('splash-screen').classList.add('hidden');
-            document.getElementById('main-app').classList.remove('hidden');
-        }, 2500);
+            document.getElementById('dashboard-screen').classList.remove('hidden');
+        }, 2000);
+
+        // Screen Navigation Logic
+        function openUploadScreen() {
+            document.getElementById('dashboard-screen').classList.add('hidden');
+            document.getElementById('upload-screen').classList.remove('hidden');
+            window.scrollTo(0, 0); 
+        }
+
+        function closeUploadScreen() {
+            document.getElementById('upload-screen').classList.add('hidden');
+            document.getElementById('dashboard-screen').classList.remove('hidden');
+        }
+
+        // Native Image Preview Logic
+        function handleImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('preview-image').src = e.target.result;
+                    document.getElementById('dashed-box').style.display = 'none';
+                    document.getElementById('img-preview-box').style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            }
+        }
     </script>
 
 </body>
