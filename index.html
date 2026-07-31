@@ -1,486 +1,172 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Product AI</title>
+    <!-- Using Google Fonts for that premium look -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { margin: 0; padding: 0; font-family: 'Inter', sans-serif; background-color: #f5f7fa; color: #111827; }
+        
+        /* Universal App Container */
+        .app-container { height: 100vh; overflow-y: auto; padding-bottom: 70px; }
+        .hidden { display: none !important; }
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        /* --- 1. SPLASH SCREEN --- */
+        #splash-screen {
+            height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
+            background: linear-gradient(135deg, #0f172a, #1e1b4b); color: white; padding-bottom: 0;
+        }
+        .logo-box {
+            background: rgba(255,255,255,0.1); padding: 20px; border-radius: 20px;
+            font-size: 50px; margin-bottom: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        .splash-title { font-size: 28px; font-weight: 700; margin: 0; }
+        .splash-subtitle { font-size: 14px; color: #94a3b8; margin-top: 5px; }
+        .loader {
+            width: 150px; height: 4px; background: rgba(255,255,255,0.2); margin-top: 50px; border-radius: 4px; overflow: hidden;
+        }
+        .loader-bar { width: 50%; height: 100%; background: #6366f1; border-radius: 4px; animation: load 2s infinite ease-in-out; }
+        @keyframes load { 0% { transform: translateX(-100%); } 100% { transform: translateX(200%); } }
 
-<title>Pavey AI</title>
+        /* --- 2. HOME DASHBOARD --- */
+        .header { padding: 20px; display: flex; justify-content: space-between; align-items: center; background: white; }
+        .header-title { font-size: 20px; font-weight: 700; }
+        .header-icon { font-size: 22px; color: #4b5563; }
 
-<link rel="stylesheet" href="css/app.css">
+        .dashboard-content { padding: 20px; }
+        .welcome-sec h1 { font-size: 24px; margin: 0; font-weight: 700; }
+        .welcome-sec p { font-size: 14px; color: #6b7280; margin: 5px 0 20px 0; }
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        /* Big CTA Button */
+        .create-btn {
+            background: linear-gradient(135deg, #4f46e5, #3b82f6); color: white;
+            padding: 20px; border-radius: 16px; display: flex; justify-content: space-between; align-items: center;
+            box-shadow: 0 10px 20px rgba(79, 70, 229, 0.3); cursor: pointer; margin-bottom: 25px;
+        }
+        .create-btn:active { transform: scale(0.98); }
+        .create-btn h2 { margin: 0; font-size: 18px; font-weight: 600; }
+        .create-btn p { margin: 5px 0 0 0; font-size: 13px; opacity: 0.9; }
+        .plus-icon { background: rgba(255,255,255,0.2); width: 40px; height: 40px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; }
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+        /* Recent Products */
+        .section-title { font-size: 16px; font-weight: 700; margin-bottom: 15px; display: flex; justify-content: space-between; }
+        .view-all { color: #4f46e5; font-size: 13px; font-weight: 600; }
+        
+        .product-card {
+            background: white; padding: 15px; border-radius: 12px; display: flex; align-items: center;
+            margin-bottom: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+        .product-icon { width: 50px; height: 50px; background: #f3f4f6; border-radius: 8px; display: flex; justify-content: center; align-items: center; font-size: 24px; margin-right: 15px; }
+        .product-info flex { 1; }
+        .product-info h4 { margin: 0; font-size: 15px; }
+        .product-info p { margin: 3px 0 0 0; font-size: 13px; color: #6b7280; }
+        .status-badge { background: #dcfce7; color: #166534; padding: 3px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; margin-top: 5px; display: inline-block; }
 
+        /* --- 3. BOTTOM NAVIGATION --- */
+        .bottom-nav {
+            position: fixed; bottom: 0; width: 100%; background: white; padding: 12px 0;
+            display: flex; justify-content: space-around; box-shadow: 0 -4px 10px rgba(0,0,0,0.05);
+            border-top-left-radius: 20px; border-top-right-radius: 20px; z-index: 1000;
+        }
+        .nav-item { text-align: center; color: #9ca3af; font-size: 11px; font-weight: 600; display: flex; flex-direction: column; align-items: center; cursor: pointer; }
+        .nav-item.active { color: #4f46e5; }
+        .nav-icon { font-size: 22px; margin-bottom: 4px; }
+    </style>
 </head>
-
 <body>
 
-<div class="app">
-
-<!-- ================= HEADER ================= -->
-
-<header class="header">
-
-<div class="menu-btn">
-<i class="fa-solid fa-bars"></i>
-</div>
-
-<div class="logo">
-
-<div class="logo-icon">
-✨
-</div>
-
-<div>
-
-<h2>Pavey AI</h2>
-
-<p>AI Product Studio</p>
-
-</div>
-
-</div>
-
-<div class="notification">
-
-<i class="fa-regular fa-bell"></i>
-
-</div>
-
-</header>
-
-<!-- ================= WELCOME ================= -->
-
-<section class="welcome-card">
-
-<h1>
-
-Welcome Back 👋
-
-</h1>
-
-<p>
-
-Create professional product images,
-
-SEO content and publish to Shopify
-
-with one click.
-
-</p>
-
-</section>
-
-<!-- ================= CREATE PRODUCT ================= -->
-
-<section class="create-card">
-
-<button id="createBtn">
-
-<i class="fa-solid fa-plus"></i>
-
-<span>
-
-Create New Product
-
-</span>
-
-</button>
-
-</section>
-
-<!-- ================= QUICK ACTIONS ================= -->
-
-<section class="quick-actions">
-
-<h3>
-
-Quick Actions
-
-</h3>
-
-<div class="action-grid">
-
-<div class="action-card">
-
-<i class="fa-solid fa-camera"></i>
-
-<span>Camera</span>
-
-</div>
-
-<div class="action-card">
-
-<i class="fa-regular fa-image"></i>
-
-<span>Gallery</span>
-
-</div>
-
-<div class="action-card">
-
-<i class="fa-solid fa-microphone"></i>
-
-<span>Voice</span>
-
-</div>
-
-<div class="action-card">
-
-<i class="fa-solid fa-wand-magic-sparkles"></i>
-
-<span>AI Tools</span>
-
-</div>
-
-</div>
-
-</section>
-  <!-- ================= RECENT PRODUCTS ================= -->
-
-<section class="recent-products">
-
-    <div class="section-title">
-
-        <h3>Recent Products</h3>
-
-        <a href="#">View All</a>
-
+    <!-- SPLASH SCREEN -->
+    <div id="splash-screen">
+        <div class="logo-box">🛍️</div>
+        <h1 class="splash-title">Product AI</h1>
+        <p class="splash-subtitle">Sell Smart, Sell More!</p>
+        <div class="loader"><div class="loader-bar"></div></div>
     </div>
 
-    <div class="product-card">
-
-        <div class="product-image">
-            👕
+    <!-- MAIN APP CONTAINER -->
+    <div id="main-app" class="app-container hidden">
+        
+        <!-- HEADER -->
+        <div class="header">
+            <div class="header-icon">≡</div>
+            <div class="header-title">Product AI</div>
+            <div class="header-icon">🔔</div>
         </div>
 
-        <div class="product-info">
+        <!-- DASHBOARD CONTENT -->
+        <div class="dashboard-content">
+            <div class="welcome-sec">
+                <h1>Welcome back! 👋</h1>
+                <p>Let's create something amazing today.</p>
+            </div>
 
-            <h4>Premium Cotton T-Shirt</h4>
+            <!-- Main CTA (Will trigger Upload Screen later) -->
+            <div class="create-btn" onclick="alert('Proceeding to Upload Screen...')">
+                <div>
+                    <h2>New Product</h2>
+                    <p>Create a new product with AI</p>
+                </div>
+                <div class="plus-icon">+</div>
+            </div>
 
-            <p>Published • ₹399</p>
+            <!-- Recent Products List -->
+            <div class="section-title">
+                <span>Recent Products</span>
+                <span class="view-all">View All</span>
+            </div>
+
+            <div class="product-card">
+                <div class="product-icon">🎧</div>
+                <div class="product-info">
+                    <h4>Wireless Headphones</h4>
+                    <p>$59.99</p>
+                    <div class="status-badge">Published</div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-icon">⌚</div>
+                <div class="product-info">
+                    <h4>Smart Watch Pro</h4>
+                    <p>$89.99</p>
+                    <div style="background: #fef9c3; color: #854d0e;" class="status-badge">Draft</div>
+                </div>
+            </div>
 
         </div>
 
-        <div class="status success">
-
-            Live
-
+        <!-- BOTTOM NAVIGATION BAR -->
+        <div class="bottom-nav">
+            <div class="nav-item active">
+                <div class="nav-icon">🏠</div>
+                <span>Home</span>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">📦</div>
+                <span>Products</span>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">📊</div>
+                <span>Analytics</span>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">👤</div>
+                <span>Profile</span>
+            </div>
         </div>
 
     </div>
 
-    <div class="product-card">
-
-        <div class="product-image">
-            ⌚
-        </div>
-
-        <div class="product-info">
-
-            <h4>Smart Watch Pro</h4>
-
-            <p>Draft • ₹1,999</p>
-
-        </div>
-
-        <div class="status draft">
-
-            Draft
-
-        </div>
-
-    </div>
-
-</section>
-
-
-
-<!-- ================= AI FEATURES ================= -->
-
-<section class="features">
-
-<h3>AI Features</h3>
-
-<div class="feature-grid">
-
-<div class="feature-box">
-
-<i class="fa-solid fa-wand-magic-sparkles"></i>
-
-<h4>Image Generator</h4>
-
-<p>Create professional product images using FLUX AI.</p>
-
-</div>
-
-<div class="feature-box">
-
-<i class="fa-solid fa-file-lines"></i>
-
-<h4>SEO Content</h4>
-
-<p>Generate title, description and keywords with Gemini.</p>
-
-</div>
-
-<div class="feature-box">
-
-<i class="fa-solid fa-tags"></i>
-
-<h4>Smart Pricing</h4>
-
-<p>AI suggests the best selling price.</p>
-
-</div>
-
-<div class="feature-box">
-
-<i class="fa-solid fa-store"></i>
-
-<h4>One Click Publish</h4>
-
-<p>Publish directly to Shopify store.</p>
-
-</div>
-
-</div>
-
-</section>
-
-
-
-<!-- ================= QUICK STATS ================= -->
-
-<section class="stats">
-
-<h3>Overview</h3>
-
-<div class="stats-grid">
-
-<div class="stat-card">
-
-<h2>124</h2>
-
-<span>Products</span>
-
-</div>
-
-<div class="stat-card">
-
-<h2>98</h2>
-
-<span>Published</span>
-
-</div>
-
-<div class="stat-card">
-
-<h2>18K</h2>
-
-<span>Visitors</span>
-
-</div>
-
-<div class="stat-card">
-
-<h2>₹52K</h2>
-
-<span>Revenue</span>
-
-</div>
-
-</div>
-
-</section>
-  <!-- ================= AI SHORTCUT ================= -->
-
-<section class="ai-shortcut">
-
-    <div class="ai-card">
-
-        <div class="ai-left">
-
-            <h3>✨ AI Assistant</h3>
-
-            <p>
-                Need help creating a perfect product listing?
-                Let AI do everything for you.
-            </p>
-
-        </div>
-
-        <button class="ai-btn">
-
-            Open AI
-
-        </button>
-
-    </div>
-
-</section>
-
-
-
-<!-- ================= FLOATING BUTTON ================= -->
-
-<button class="fab" id="fab">
-
-    <i class="fa-solid fa-plus"></i>
-
-</button>
-
-
-
-<!-- ================= BOTTOM NAVIGATION ================= -->
-
-<nav class="bottom-nav">
-
-    <a href="#" class="active">
-
-        <i class="fa-solid fa-house"></i>
-
-        <span>Home</span>
-
-    </a>
-
-    <a href="#">
-
-        <i class="fa-solid fa-box"></i>
-
-        <span>Products</span>
-
-    </a>
-
-    <a href="#">
-
-        <i class="fa-solid fa-chart-column"></i>
-
-        <span>Analytics</span>
-
-    </a>
-
-    <a href="#">
-
-        <i class="fa-solid fa-user"></i>
-
-        <span>Profile</span>
-
-    </a>
-
-</nav>
-
-
-
-<!-- ================= CREATE PRODUCT MODAL ================= -->
-
-<div class="modal" id="createModal">
-
-    <div class="modal-content">
-
-        <h2>
-
-            Create New Product
-
-        </h2>
-
-        <p>
-
-            Choose how you want to add your product.
-
-        </p>
-
-        <div class="modal-grid">
-
-            <button class="modal-btn">
-
-                📷 Camera
-
-            </button>
-
-            <button class="modal-btn">
-
-                🖼 Gallery
-
-            </button>
-
-            <button class="modal-btn">
-
-                🎤 Voice
-
-            </button>
-
-            <button class="modal-btn">
-
-                🤖 AI Template
-
-            </button>
-
-        </div>
-
-        <button class="close-btn">
-
-            Close
-
-        </button>
-
-    </div>
-
-</div>
-  <!-- ================= LOADING OVERLAY ================= -->
-
-<div class="loading-screen" id="loadingScreen">
-
-    <div class="loader"></div>
-
-    <h3>AI is Creating Your Product...</h3>
-
-    <p>Please wait a few seconds.</p>
-
-</div>
-
-
-
-<!-- ================= SUCCESS TOAST ================= -->
-
-<div class="toast" id="toast">
-
-    <i class="fa-solid fa-circle-check"></i>
-
-    <span>Product Created Successfully</span>
-
-</div>
-
-
-
-<!-- ================= APP VERSION ================= -->
-
-<footer class="app-footer">
-
-    <p>
-
-        Pavey AI Product Studio
-
-    </p>
-
-    <span>
-
-        Version 1.0.0
-
-    </span>
-
-</footer>
-
-
-
-</div>
-
-<script src="js/app.js"></script>
+    <!-- MAGIC JAVASCRIPT -->
+    <script>
+        // Splash screen ko 2.5 seconds ke baad hide karke dashboard show karna
+        setTimeout(function() {
+            document.getElementById('splash-screen').classList.add('hidden');
+            document.getElementById('main-app').classList.remove('hidden');
+        }, 2500);
+    </script>
 
 </body>
-
 </html>
