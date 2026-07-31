@@ -5,93 +5,116 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Pavey AI</title>
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); /* Premium Dark Theme */
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        /* Basic Settings */
+        body { margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; }
+        
+        /* --- LOGIN SCREEN DESIGN --- */
+        #login-screen {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            height: 100vh; display: flex; justify-content: center; align-items: center;
         }
         .login-box {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 40px 30px;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-            width: 85%;
-            max-width: 400px;
-            text-align: center;
+            background: rgba(255, 255, 255, 0.95); padding: 40px 30px;
+            border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            width: 85%; max-width: 400px; text-align: center;
         }
-        .logo {
-            font-size: 36px;
-            font-weight: 800;
-            color: #203a43;
-            margin-bottom: 5px;
+        .input-box input { 
+            width: 100%; padding: 14px; margin-bottom: 20px; 
+            border: 2px solid #ddd; border-radius: 10px; box-sizing: border-box; 
         }
-        .subtitle {
-            color: #666;
-            margin-bottom: 30px;
-            font-size: 14px;
+        .login-btn { 
+            background: #203a43; color: white; border: none; padding: 15px; 
+            width: 100%; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; 
         }
-        .input-box {
-            margin-bottom: 20px;
-            text-align: left;
+
+        /* --- DASHBOARD (APP KE ANDAR KA) DESIGN --- */
+        #dashboard-screen {
+            background: #f4f7f6; min-height: 100vh; 
+            display: none; /* Starting mein ye chupa rahega */
         }
-        .input-box label {
-            display: block;
-            margin-bottom: 8px;
-            color: #333;
-            font-size: 14px;
-            font-weight: 600;
+        .navbar {
+            background: #203a43; color: white; padding: 15px 20px;
+            display: flex; justify-content: space-between; align-items: center; 
+            font-size: 20px; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
-        .input-box input {
-            width: 100%;
-            padding: 14px;
-            border: 2px solid #ddd;
-            border-radius: 10px;
-            box-sizing: border-box;
-            font-size: 15px;
-            outline: none;
-            transition: border-color 0.3s;
+        .container { padding: 20px; }
+        .welcome-text { font-size: 22px; color: #2c5364; font-weight: bold; margin-bottom: 20px; }
+        
+        /* Features ke liye mast Grid */
+        .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .card {
+            background: white; padding: 20px; border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05); text-align: center;
         }
-        .input-box input:focus {
-            border-color: #2c5364;
-        }
-        .login-btn {
-            background: #203a43;
-            color: white;
-            border: none;
-            padding: 15px;
-            width: 100%;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 10px;
-        }
+        .card .icon { font-size: 35px; margin-bottom: 10px; }
+        .card h3 { margin: 0 0 5px 0; color: #203a43; font-size: 16px; }
+        .card p { margin: 0; color: #777; font-size: 12px; }
     </style>
 </head>
 <body>
 
-    <div class="login-box">
-        <div class="logo">Pavey AI 🚀</div>
-        <div class="subtitle">Welcome back! Please login to continue.</div>
-        
-        <div class="input-box">
-            <label>Email ID</label>
-            <input type="email" placeholder="Enter your email">
+    <!-- SCREEN 1: LOGIN PAGE -->
+    <div id="login-screen">
+        <div class="login-box">
+            <h1 style="color: #203a43; margin-top:0;">Pavey AI 🚀</h1>
+            <p style="color: #666; margin-bottom: 20px;">Please login to continue.</p>
+            <div class="input-box"><input type="email" placeholder="Email ID"></div>
+            <div class="input-box"><input type="password" placeholder="Password"></div>
+            <!-- Is button ko dabane se 'enterApp()' function chalega -->
+            <button class="login-btn" onclick="enterApp()">Login to App</button>
         </div>
-        
-        <div class="input-box">
-            <label>Password</label>
-            <input type="password" placeholder="Enter your password">
-        </div>
-        
-        <!-- Yeh button click karne par ek chota sa message aayega! -->
-        <button class="login-btn" onclick="alert('Hello Abhishek bhai! Login System abhi under development hai. 😉')">Login</button>
     </div>
+
+    <!-- SCREEN 2: MAIN DASHBOARD (App ke andar) -->
+    <div id="dashboard-screen">
+        <div class="navbar">
+            <span>Pavey AI</span>
+            <span style="font-size: 14px; background: #2c5364; padding: 5px 10px; border-radius: 20px;">Profile</span>
+        </div>
+        
+        <div class="container">
+            <div class="welcome-text">Welcome back, Abhishek! 👋</div>
+            
+            <!-- App ke andar ke Features -->
+            <div class="feature-grid">
+                
+                <div class="card">
+                    <div class="icon">🎨</div>
+                    <h3>Graphics Tool</h3>
+                    <p>AI Canva Edits</p>
+                </div>
+                
+                <div class="card">
+                    <div class="icon">📸</div>
+                    <h3>Studio Manager</h3>
+                    <p>Wedding Bookings</p>
+                </div>
+                
+                <div class="card">
+                    <div class="icon">🏢</div>
+                    <h3>Hostel Space</h3>
+                    <p>Manage Rooms</p>
+                </div>
+                
+                <div class="card">
+                    <div class="icon">⚙️</div>
+                    <h3>Settings</h3>
+                    <p>App Preferences</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- MAGIC SCRIPT: Pages ko switch karne ke liye -->
+    <script>
+        function enterApp() {
+            // 1. Login screen ko hide kar do
+            document.getElementById("login-screen").style.display = "none";
+            // 2. Dashboard screen ko show kar do
+            document.getElementById("dashboard-screen").style.display = "block";
+        }
+    </script>
 
 </body>
 </html>
