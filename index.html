@@ -6,6 +6,7 @@
     <title>Product AI</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        /* CSS WAHI SAME HAI JO PEHLE THI (Pixel Perfect UI) */
         body { margin: 0; padding: 0; font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #0f172a; }
         .hidden { display: none !important; }
         .screen { height: 100vh; overflow-y: auto; background-color: #f8fafc; padding-bottom: 90px; box-sizing: border-box; }
@@ -38,6 +39,7 @@
         .dash-card { background: white; padding: 16px; border-radius: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
         .dash-card h3 { margin: 10px 0 3px 0; font-size: 14px; font-weight: 600; }
         .dash-card p { margin: 0; font-size: 12px; color: #64748b; }
+        .section-title { font-size: 16px; font-weight: 700; margin: 20px 0 15px 0; }
 
         /* 3. UPLOAD SCREEN */
         .upload-content { padding: 20px; background: white; height: 100%; }
@@ -48,7 +50,7 @@
         #preview-image { width: 100%; border-radius: 16px; max-height: 250px; object-fit: cover; }
         .proceed-details-btn { width: 100%; padding: 16px; background: #6d28d9; color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 20px; }
 
-        /* 4. REAL LIVE CAMERA VIEW FINDER SCREEN (NEW) */
+        /* 4. REAL LIVE CAMERA VIEW FINDER SCREEN */
         #live-camera-screen { background: black; padding: 0; height: 100vh; position: relative; overflow: hidden; }
         #cameraVideo { width: 100%; height: 100%; object-fit: cover; }
         .camera-overlay { position: absolute; bottom: 0; width: 100%; padding: 30px 20px; display: flex; justify-content: space-around; align-items: center; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); box-sizing: border-box; }
@@ -71,7 +73,6 @@
         .check-circle { width: 22px; height: 22px; background: #22c55e; color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 12px; }
         .spin-circle { width: 22px; height: 22px; border: 3px solid #e2e8f0; border-top: 3px solid #6d28d9; border-radius: 50%; animation: spin 1s linear infinite; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
-        .time-box { background: #f5f3ff; border-radius: 12px; padding: 20px; }
 
         /* 7. RESULT SCREEN */
         .result-content { padding: 20px; background: white; padding-bottom: 100px; }
@@ -108,7 +109,7 @@
         <div class="loader"><div class="loader-bar"></div></div>
     </div>
 
-    <!-- 2. DASHBOARD SCREEN -->
+    <!-- 2. DASHBOARD SCREEN (Now Dynamic) -->
     <div id="dashboard-screen" class="screen hidden">
         <div class="dash-header">
             <div><h1>Hello, Abhishek 👋</h1><p>What do you want to sell today?</p></div>
@@ -119,10 +120,24 @@
                 <div><h2>Create New Product</h2><p>Create products with AI</p></div>
                 <div class="main-cta-btn">+</div>
             </div>
+            
             <div class="dash-grid">
-                <div class="dash-card"><h3 style="color: #f59e0b;">📦 My Products</h3><p>12 Products</p></div>
-                <div class="dash-card"><h3 style="color: #6d28d9;">📄 Drafts</h3><p>3 Drafts</p></div>
+                <div class="dash-card">
+                    <h3 style="color: #f59e0b;">📦 My Products</h3>
+                    <p id="total-products-count">0 Products</p> <!-- Dynamic Count -->
+                </div>
+                <div class="dash-card">
+                    <h3 style="color: #6d28d9;">📄 Drafts</h3>
+                    <p>0 Drafts</p>
+                </div>
             </div>
+
+            <!-- Dynamic Recent Products List -->
+            <div class="section-title">Recent Products</div>
+            <div id="recent-products-list">
+                <!-- Products memory se yahan load honge -->
+            </div>
+            
         </div>
     </div>
 
@@ -134,7 +149,6 @@
             <div class="header-icon">🔔</div>
         </div>
         <div class="upload-content">
-            <!-- Native Gallery Fallback Input -->
             <input type="file" id="galleryInput" accept="image/*" style="display: none;" onchange="handleGalleryImage(event)">
 
             <div class="btn-row">
@@ -142,7 +156,6 @@
                 <div class="media-btn" onclick="document.getElementById('galleryInput').click()">🖼️ Gallery</div>
             </div>
 
-            <!-- Image Preview Box -->
             <div id="img-preview-box">
                 <img id="preview-image" src="" alt="Product Preview">
             </div>
@@ -157,7 +170,7 @@
         </div>
     </div>
 
-    <!-- 4. REAL LIVE CAMERA VIEW FINDER SCREEN (ANDROID 14 COMPATIBLE) -->
+    <!-- 4. LIVE CAMERA VIEW FINDER SCREEN -->
     <div id="live-camera-screen" class="screen hidden">
         <video id="cameraVideo" autoplay playsinline></video>
         <canvas id="captureCanvas" style="display:none;"></canvas>
@@ -166,11 +179,11 @@
             <div class="shutter-btn" onclick="takeSnapshot()">
                 <div class="shutter-inner"></div>
             </div>
-            <div style="width: 70px;"></div> <!-- Balancing space -->
+            <div style="width: 70px;"></div>
         </div>
     </div>
 
-    <!-- 5. PRODUCT DETAILS SCREEN -->
+    <!-- 5. PRODUCT DETAILS SCREEN (Now with IDs for Data Collection) -->
     <div id="details-screen" class="screen hidden">
         <div class="top-header">
             <div class="back-btn" onclick="goToScreen('upload-screen')">←</div>
@@ -178,8 +191,14 @@
             <div class="header-icon">🔔</div>
         </div>
         <div class="form-content">
-            <div class="input-group"><label class="input-label">Product Name</label><input type="text" class="form-control" value="Men's Cotton T-Shirt"></div>
-            <div class="input-group"><label class="input-label">Price (₹)</label><input type="number" class="form-control" value="399"></div>
+            <div class="input-group">
+                <label class="input-label">Product Name</label>
+                <input type="text" id="prodNameInput" class="form-control" placeholder="e.g., Premium Cotton T-Shirt">
+            </div>
+            <div class="input-group">
+                <label class="input-label">Price (₹)</label>
+                <input type="number" id="prodPriceInput" class="form-control" placeholder="e.g., 399">
+            </div>
             <button class="magic-btn" onclick="startAIGeneration()">Generate with AI ✨</button>
         </div>
     </div>
@@ -208,17 +227,18 @@
         </div>
         <div class="result-content">
             <div class="img-grid">
-                <img id="result-main-img" src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=500&q=80" class="main-img">
+                <img id="result-main-img" src="" class="main-img">
                 <div class="side-imgs">
-                    <img src="https://images.unsplash.com/photo-1581655353564-df123a1eb820?auto=format&fit=crop&w=300&q=80" class="sub-img">
-                    <img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=300&q=80" class="sub-img">
+                    <img id="result-sub-img1" src="" class="sub-img">
+                    <img id="result-sub-img2" src="" class="sub-img">
                 </div>
             </div>
             <div class="seo-box">
                 <h4>SEO Title</h4>
-                <p>Premium Cotton Men's T-Shirt – Soft, Stylish & Durable</p>
+                <p id="generated-seo-title">Generating best SEO title for your product...</p>
             </div>
-            <button class="proceed-publish-btn" onclick="goToScreen('success-screen')">Publish Now 🚀</button>
+            <!-- Changed button to directly publish and save for now -->
+            <button class="proceed-publish-btn" onclick="publishAndSaveProduct()">Publish Now 🚀</button>
         </div>
     </div>
 
@@ -230,14 +250,14 @@
             <p style="color:#d1fae5; margin-bottom:30px;">Product Successfully Published to Store</p>
         </div>
         <div class="success-card">
-            <img id="success-thumb-img" src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=200&q=80">
+            <img id="success-thumb-img" src="">
             <div>
-                <h3 style="margin:0 0 5px 0; font-size:14px;">Premium Cotton T-Shirt</h3>
-                <p style="margin:0 0 10px 0; font-size:16px; font-weight:700;">₹399</p>
+                <h3 id="success-title-text" style="margin:0 0 5px 0; font-size:14px;">Product Name</h3>
+                <p id="success-price-text" style="margin:0 0 10px 0; font-size:16px; font-weight:700;">₹0</p>
                 <span style="background:#dcfce7; color:#166534; padding:3px 8px; border-radius:10px; font-size:11px; font-weight:700;">Published</span>
             </div>
         </div>
-        <button class="outline-btn" style="margin: 0 20px; width: auto;" onclick="goToScreen('dashboard-screen')">Go to My Products</button>
+        <button class="outline-btn" style="margin: 0 20px; width: auto;" onclick="goToScreen('dashboard-screen')">Go to Dashboard</button>
     </div>
 
     <!-- GLOBAL BOTTOM NAVIGATION -->
@@ -249,13 +269,21 @@
         <div class="nav-item"><div class="nav-icon">👤</div>Profile</div>
     </div>
 
-    <!-- JAVASCRIPT LOGIC FOR REAL CAMERA ACCESS -->
+    <!-- JAVASCRIPT LOGIC (WITH MEMORY / LOCAL STORAGE) -->
     <script>
         let mediaStream = null;
+        
+        // 🧠 Temporary memory for the current product being created
+        let currentProduct = {
+            name: "",
+            price: "",
+            imageBase64: ""
+        };
 
-        // Splash Screen Timer
+        // Initialize App & Load Dashboard Data
         setTimeout(() => {
             document.getElementById('splash-screen').classList.add('hidden');
+            loadDashboardData(); // Load saved products immediately
             document.getElementById('dashboard-screen').classList.remove('hidden');
             document.getElementById('main-nav').classList.remove('hidden');
         }, 2000);
@@ -265,26 +293,58 @@
             screens.forEach(screen => screen.classList.add('hidden'));
             document.getElementById(targetScreenId).classList.remove('hidden');
             window.scrollTo(0, 0);
+
+            // Refresh Dashboard list whenever user goes back to home
+            if(targetScreenId === 'dashboard-screen') {
+                loadDashboardData();
+            }
         }
 
-        // --- REAL LIVE CAMERA FUNCTIONS ---
+        // --- DASHBOARD DATA LOADING (The Memory Engine) ---
+        function loadDashboardData() {
+            // Get array from local storage (or empty array if null)
+            let savedProducts = JSON.parse(localStorage.getItem('productAI_products')) || [];
+            
+            // Update the Top Count
+            document.getElementById('total-products-count').innerText = savedProducts.length + " Products";
+
+            // Update Recent Products List
+            let listContainer = document.getElementById('recent-products-list');
+            let html = '';
+
+            if(savedProducts.length === 0) {
+                html = '<div style="text-align:center; padding:20px; color:#94a3b8; font-size:13px;">No products yet. Create your first product!</div>';
+            } else {
+                // Loop through array and create UI cards
+                for(let i = 0; i < savedProducts.length; i++) {
+                    let p = savedProducts[i];
+                    html += `
+                    <div class="dash-card" style="display:flex; align-items:center; gap:15px; margin-bottom:10px; padding:12px;">
+                        <img src="${p.imageBase64}" style="width:55px; height:55px; border-radius:10px; object-fit:cover; border:1px solid #e2e8f0;">
+                        <div style="flex:1;">
+                            <h4 style="margin:0; font-size:14px; color:#0f172a; font-weight:600;">${p.name}</h4>
+                            <p style="margin:4px 0 0 0; font-size:13px; font-weight:700; color:#6d28d9;">₹${p.price}</p>
+                        </div>
+                        <div style="background:#dcfce7; color:#166534; padding:4px 8px; border-radius:8px; font-size:10px; font-weight:700;">Live</div>
+                    </div>
+                    `;
+                }
+            }
+            listContainer.innerHTML = html;
+        }
+
+        // --- LIVE CAMERA & IMAGE HANDLING ---
         function startLiveCamera() {
             goToScreen('live-camera-screen');
             const videoElement = document.getElementById('cameraVideo');
-
-            // Requesting Camera Access for Android 14 WebViews
-            navigator.mediaDevices.getUserMedia({ 
-                video: { facingMode: { ideal: "environment" } }, 
-                audio: false 
-            })
+            navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: "environment" } }, audio: false })
             .then(stream => {
                 mediaStream = stream;
                 videoElement.srcObject = stream;
                 videoElement.play();
             })
             .catch(err => {
-                console.error("Camera Access Error:", err);
-                alert("Camera permission denied! Please allow camera access in your phone settings.");
+                alert("Camera permission denied!");
                 goToScreen('upload-screen');
             });
         }
@@ -292,62 +352,85 @@
         function takeSnapshot() {
             const videoElement = document.getElementById('cameraVideo');
             const canvas = document.getElementById('captureCanvas');
-            
             canvas.width = videoElement.videoWidth || 640;
             canvas.height = videoElement.videoHeight || 480;
-            
             const ctx = canvas.getContext('2d');
             ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
-            
             const imageDataUrl = canvas.toDataURL('image/png');
-            
-            // Stop camera stream to free hardware resources
             stopCameraStream();
-
-            // Display preview and show continue button
-            document.getElementById('preview-image').src = imageDataUrl;
-            document.getElementById('result-main-img').src = imageDataUrl;
-            document.getElementById('success-thumb-img').src = imageDataUrl;
-            
-            document.getElementById('img-preview-box').style.display = 'block';
-            document.getElementById('proceedBtn').style.display = 'block';
-            
-            goToScreen('upload-screen');
+            saveImageToMemoryAndProceed(imageDataUrl);
         }
 
-        function stopLiveCamera() {
-            stopCameraStream();
-            goToScreen('upload-screen');
-        }
+        function stopLiveCamera() { stopCameraStream(); goToScreen('upload-screen'); }
+        function stopCameraStream() { if (mediaStream) { mediaStream.getTracks().forEach(track => track.stop()); mediaStream = null; } }
 
-        function stopCameraStream() {
-            if (mediaStream) {
-                mediaStream.getTracks().forEach(track => track.stop());
-                mediaStream = null;
-            }
-        }
-
-        // Gallery Image Fallback Handler
         function handleGalleryImage(event) {
             const file = event.target.files[0];
             if (file) {
                 const reader = new FileReader();
-                reader.onload = function(e) {
-                    const url = e.target.result;
-                    document.getElementById('preview-image').src = url;
-                    document.getElementById('result-main-img').src = url;
-                    document.getElementById('success-thumb-img').src = url;
-
-                    document.getElementById('img-preview-box').style.display = 'block';
-                    document.getElementById('proceedBtn').style.display = 'block';
-                }
+                reader.onload = function(e) { saveImageToMemoryAndProceed(e.target.result); }
                 reader.readAsDataURL(file);
             }
         }
 
+        function saveImageToMemoryAndProceed(dataUrl) {
+            // Save to current session memory
+            currentProduct.imageBase64 = dataUrl;
+            
+            // Show preview on upload screen
+            document.getElementById('preview-image').src = dataUrl;
+            document.getElementById('img-preview-box').style.display = 'block';
+            document.getElementById('proceedBtn').style.display = 'block';
+            goToScreen('upload-screen');
+        }
+
+        // --- AI GENERATION & PUBLISHING ---
         function startAIGeneration() {
+            // Capture inputs from the form
+            let nameInput = document.getElementById('prodNameInput').value;
+            let priceInput = document.getElementById('prodPriceInput').value;
+            
+            if(!nameInput || !priceInput) {
+                alert("Bhai, Product ka naam aur price dono zaroori hain!");
+                return;
+            }
+
+            // Save to memory
+            currentProduct.name = nameInput;
+            currentProduct.price = priceInput;
+
+            // Go to Generating Screen
             goToScreen('generating-screen');
-            setTimeout(() => { goToScreen('result-screen'); }, 2000);
+            
+            // Wait 2 seconds, then show Result Screen
+            setTimeout(() => { 
+                // Populate Result Screen with memory data
+                document.getElementById('result-main-img').src = currentProduct.imageBase64;
+                document.getElementById('result-sub-img1').src = currentProduct.imageBase64;
+                document.getElementById('result-sub-img2').src = currentProduct.imageBase64;
+                document.getElementById('generated-seo-title').innerText = "Premium " + currentProduct.name + " - Best Quality & Affordable at ₹" + currentProduct.price;
+                
+                goToScreen('result-screen'); 
+            }, 2500);
+        }
+
+        function publishAndSaveProduct() {
+            // 1. Fetch old products from Local Storage
+            let savedProducts = JSON.parse(localStorage.getItem('productAI_products')) || [];
+            
+            // 2. Add current product to the TOP of the array
+            savedProducts.unshift(currentProduct);
+            
+            // 3. Save array back to Local Storage
+            localStorage.setItem('productAI_products', JSON.stringify(savedProducts));
+
+            // 4. Update Success Screen UI
+            document.getElementById('success-thumb-img').src = currentProduct.imageBase64;
+            document.getElementById('success-title-text').innerText = currentProduct.name;
+            document.getElementById('success-price-text').innerText = "₹" + currentProduct.price;
+
+            // 5. Show Success Screen
+            goToScreen('success-screen');
         }
     </script>
 </body>
