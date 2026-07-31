@@ -7,7 +7,7 @@
     <style>
         body { margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; background: #f8f9fa; }
         
-        /* --- LOGIN SCREEN --- */
+        /* --- 1. LOGIN SCREEN --- */
         #login-screen {
             background: linear-gradient(135deg, #1e3c72, #2a5298);
             height: 100vh; display: flex; justify-content: center; align-items: center;
@@ -21,9 +21,8 @@
             width: 100%; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; 
             margin-top: 10px; transition: 0.3s;
         }
-        .login-btn:hover { background: #ff5252; }
 
-        /* --- DASHBOARD SCREEN --- */
+        /* --- 2. DASHBOARD SCREEN --- */
         #dashboard-screen { display: none; }
         .navbar {
             background: #1e3c72; color: white; padding: 15px 20px;
@@ -34,22 +33,44 @@
         .welcome-text { font-size: 22px; color: #1e3c72; font-weight: bold; margin-bottom: 5px; }
         .subtitle { color: #666; font-size: 14px; margin-bottom: 20px; }
         
-        /* Feature Grid */
         .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         .card {
             background: white; padding: 20px 15px; border-radius: 15px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.05); text-align: center;
             border: 1px solid #eee; cursor: pointer; transition: 0.2s;
         }
-        .card:active { transform: scale(0.95); }
+        .card:active { transform: scale(0.95); background: #f0f8ff; }
         .card .icon { font-size: 35px; margin-bottom: 10px; }
         .card h3 { margin: 0 0 5px 0; color: #333; font-size: 15px; }
         .card p { margin: 0; color: #888; font-size: 12px; }
+
+        /* --- 3. UPLOAD PRODUCT SCREEN --- */
+        #upload-screen { display: none; }
+        .back-btn { font-size: 16px; cursor: pointer; background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 8px; }
+        
+        .upload-box {
+            background: white; border: 2px dashed #1e3c72; border-radius: 15px;
+            padding: 30px; text-align: center; margin-bottom: 20px;
+            color: #1e3c72; cursor: pointer; transition: 0.2s;
+        }
+        .upload-box:active { background: #eef2f5; }
+        
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; color: #333; font-size: 14px;}
+        .form-group input, .form-group select {
+            width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; font-size: 15px;
+        }
+        
+        .submit-btn {
+            background: #1e3c72; color: white; border: none; padding: 15px;
+            width: 100%; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer;
+            margin-top: 10px; margin-bottom: 30px;
+        }
     </style>
 </head>
 <body>
 
-    <!-- LOGIN PAGE -->
+    <!-- 1. LOGIN PAGE -->
     <div id="login-screen">
         <div class="login-box">
             <h1 style="color: #1e3c72; margin-top:0;">Product AI 🏪</h1>
@@ -58,7 +79,7 @@
         </div>
     </div>
 
-    <!-- MAIN DASHBOARD -->
+    <!-- 2. MAIN DASHBOARD -->
     <div id="dashboard-screen">
         <div class="navbar">
             <span>Product AI</span>
@@ -70,39 +91,105 @@
             <div class="subtitle">Ready to digitize some products today?</div>
             
             <div class="feature-grid">
-                
-                <div class="card" onclick="alert('Product Upload module will open here!')">
+                <!-- Is card par click karne se form khulega -->
+                <div class="card" onclick="openUploadScreen()">
                     <div class="icon">📷</div>
                     <h3>Add Product</h3>
                     <p>Camera or Gallery</p>
                 </div>
                 
-                <div class="card" onclick="alert('AI Image Enhancement tool loading...')">
+                <div class="card" onclick="alert('AI Image Enhancement tool jaldi aayega!')">
                     <div class="icon">✨</div>
                     <h3>AI Image Magic</h3>
                     <p>Background & Shadow</p>
                 </div>
                 
-                <div class="card" onclick="alert('SEO Content Generator loading...')">
+                <div class="card" onclick="alert('SEO Content Generator jaldi aayega!')">
                     <div class="icon">✍️</div>
                     <h3>SEO Content</h3>
                     <p>Titles & Details</p>
                 </div>
                 
-                <div class="card" onclick="alert('Social Media Maker loading...')">
+                <div class="card" onclick="alert('Social Media Maker jaldi aayega!')">
                     <div class="icon">📱</div>
                     <h3>Social Post</h3>
                     <p>Insta & WhatsApp</p>
                 </div>
-
             </div>
         </div>
     </div>
 
+    <!-- 3. ADD PRODUCT FORM SCREEN -->
+    <div id="upload-screen">
+        <div class="navbar">
+            <span class="back-btn" onclick="goBackToDashboard()">🔙 Back</span>
+            <span style="font-size: 18px;">New Product</span>
+            <span style="font-size: 20px;"></span> <!-- Khali space balance ke liye -->
+        </div>
+        
+        <div class="container">
+            
+            <!-- Photo Upload Area -->
+            <div class="upload-box" onclick="triggerCamera()">
+                <div style="font-size: 40px; margin-bottom: 10px;">📸</div>
+                <h3 style="margin: 0;">Tap to Upload Photo</h3>
+                <p style="margin: 5px 0 0 0; font-size: 12px; color: #666;">Use Camera or Gallery</p>
+            </div>
+            
+            <!-- Product Details Form -->
+            <div class="form-group">
+                <label>Product Name</label>
+                <input type="text" placeholder="e.g. Blue Denim Jacket">
+            </div>
+            
+            <div class="form-group">
+                <label>Price (₹)</label>
+                <input type="number" placeholder="e.g. 999">
+            </div>
+            
+            <div class="form-group">
+                <label>Category</label>
+                <select>
+                    <option>Clothing & Fashion</option>
+                    <option>Electronics</option>
+                    <option>Home & Kitchen</option>
+                    <option>Beauty & Cosmetics</option>
+                    <option>Others</option>
+                </select>
+            </div>
+            
+            <button class="submit-btn" onclick="generateAI()">✨ Generate AI Magic</button>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT: Pages ko chalane ke liye -->
     <script>
+        // Login se Dashboard
         function enterApp() {
             document.getElementById("login-screen").style.display = "none";
             document.getElementById("dashboard-screen").style.display = "block";
+        }
+        
+        // Dashboard se Upload Form
+        function openUploadScreen() {
+            document.getElementById("dashboard-screen").style.display = "none";
+            document.getElementById("upload-screen").style.display = "block";
+        }
+        
+        // Upload Form se wapas Dashboard (Back Button)
+        function goBackToDashboard() {
+            document.getElementById("upload-screen").style.display = "none";
+            document.getElementById("dashboard-screen").style.display = "block";
+        }
+
+        // Camera Button ke liye Placeholder
+        function triggerCamera() {
+            alert("Permission Required: Phone Camera / Gallery opening code yahan integrate hoga!");
+        }
+
+        // Submit Button ke liye Placeholder
+        function generateAI() {
+            alert("Processing... Yahan par Gemini API text likhegi aur AI Image banayegi!");
         }
     </script>
 
