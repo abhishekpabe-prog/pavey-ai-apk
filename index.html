@@ -4,201 +4,168 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Product AI</title>
+    <!-- Using Google Fonts for that premium look -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        body { margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; background: #f8f9fa; }
+        body { margin: 0; padding: 0; font-family: 'Inter', sans-serif; background-color: #f5f7fa; color: #111827; }
         
-        /* --- 1. LOGIN SCREEN --- */
-        #login-screen {
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
-            height: 100vh; display: flex; justify-content: center; align-items: center;
-        }
-        .login-box {
-            background: white; padding: 40px 30px; border-radius: 20px; 
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2); width: 85%; max-width: 400px; text-align: center;
-        }
-        .login-btn { 
-            background: #ff6b6b; color: white; border: none; padding: 15px; 
-            width: 100%; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; 
-            margin-top: 10px; transition: 0.3s;
-        }
+        /* Universal App Container */
+        .app-container { height: 100vh; overflow-y: auto; padding-bottom: 70px; }
+        .hidden { display: none !important; }
 
-        /* --- 2. DASHBOARD SCREEN --- */
-        #dashboard-screen { display: none; }
-        .navbar {
-            background: #1e3c72; color: white; padding: 15px 20px;
-            display: flex; justify-content: space-between; align-items: center; 
-            font-size: 20px; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        /* --- 1. SPLASH SCREEN --- */
+        #splash-screen {
+            height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
+            background: linear-gradient(135deg, #0f172a, #1e1b4b); color: white; padding-bottom: 0;
         }
-        .container { padding: 20px; }
-        .welcome-text { font-size: 22px; color: #1e3c72; font-weight: bold; margin-bottom: 5px; }
-        .subtitle { color: #666; font-size: 14px; margin-bottom: 20px; }
-        
-        .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .card {
-            background: white; padding: 20px 15px; border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05); text-align: center;
-            border: 1px solid #eee; cursor: pointer;
+        .logo-box {
+            background: rgba(255,255,255,0.1); padding: 20px; border-radius: 20px;
+            font-size: 50px; margin-bottom: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
         }
-        .card .icon { font-size: 35px; margin-bottom: 10px; }
-        .card h3 { margin: 0 0 5px 0; color: #333; font-size: 15px; }
-        .card p { margin: 0; color: #888; font-size: 12px; }
+        .splash-title { font-size: 28px; font-weight: 700; margin: 0; }
+        .splash-subtitle { font-size: 14px; color: #94a3b8; margin-top: 5px; }
+        .loader {
+            width: 150px; height: 4px; background: rgba(255,255,255,0.2); margin-top: 50px; border-radius: 4px; overflow: hidden;
+        }
+        .loader-bar { width: 50%; height: 100%; background: #6366f1; border-radius: 4px; animation: load 2s infinite ease-in-out; }
+        @keyframes load { 0% { transform: translateX(-100%); } 100% { transform: translateX(200%); } }
 
-        /* --- 3. UPLOAD PRODUCT SCREEN --- */
-        #upload-screen { display: none; }
-        .back-btn { font-size: 16px; cursor: pointer; background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 8px; }
-        
-        .upload-box {
-            background: white; border: 2px dashed #1e3c72; border-radius: 15px;
-            padding: 40px 20px; text-align: center; margin-bottom: 20px;
-            color: #1e3c72; cursor: pointer; transition: 0.2s;
-        }
-        .upload-box:active { background: #eef2f5; }
-        
-        /* Photo Preview Style */
-        #imagePreview {
-            display: none; width: 100%; border-radius: 15px; 
-            margin-bottom: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            object-fit: cover; max-height: 300px;
-        }
+        /* --- 2. HOME DASHBOARD --- */
+        .header { padding: 20px; display: flex; justify-content: space-between; align-items: center; background: white; }
+        .header-title { font-size: 20px; font-weight: 700; }
+        .header-icon { font-size: 22px; color: #4b5563; }
 
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; color: #333; font-size: 14px;}
-        .form-group input, .form-group select {
-            width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; font-size: 15px;
+        .dashboard-content { padding: 20px; }
+        .welcome-sec h1 { font-size: 24px; margin: 0; font-weight: 700; }
+        .welcome-sec p { font-size: 14px; color: #6b7280; margin: 5px 0 20px 0; }
+
+        /* Big CTA Button */
+        .create-btn {
+            background: linear-gradient(135deg, #4f46e5, #3b82f6); color: white;
+            padding: 20px; border-radius: 16px; display: flex; justify-content: space-between; align-items: center;
+            box-shadow: 0 10px 20px rgba(79, 70, 229, 0.3); cursor: pointer; margin-bottom: 25px;
         }
+        .create-btn:active { transform: scale(0.98); }
+        .create-btn h2 { margin: 0; font-size: 18px; font-weight: 600; }
+        .create-btn p { margin: 5px 0 0 0; font-size: 13px; opacity: 0.9; }
+        .plus-icon { background: rgba(255,255,255,0.2); width: 40px; height: 40px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; }
+
+        /* Recent Products */
+        .section-title { font-size: 16px; font-weight: 700; margin-bottom: 15px; display: flex; justify-content: space-between; }
+        .view-all { color: #4f46e5; font-size: 13px; font-weight: 600; }
         
-        .submit-btn {
-            background: #1e3c72; color: white; border: none; padding: 15px;
-            width: 100%; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer;
-            margin-top: 10px; margin-bottom: 30px;
+        .product-card {
+            background: white; padding: 15px; border-radius: 12px; display: flex; align-items: center;
+            margin-bottom: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.02);
         }
+        .product-icon { width: 50px; height: 50px; background: #f3f4f6; border-radius: 8px; display: flex; justify-content: center; align-items: center; font-size: 24px; margin-right: 15px; }
+        .product-info flex { 1; }
+        .product-info h4 { margin: 0; font-size: 15px; }
+        .product-info p { margin: 3px 0 0 0; font-size: 13px; color: #6b7280; }
+        .status-badge { background: #dcfce7; color: #166534; padding: 3px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; margin-top: 5px; display: inline-block; }
+
+        /* --- 3. BOTTOM NAVIGATION --- */
+        .bottom-nav {
+            position: fixed; bottom: 0; width: 100%; background: white; padding: 12px 0;
+            display: flex; justify-content: space-around; box-shadow: 0 -4px 10px rgba(0,0,0,0.05);
+            border-top-left-radius: 20px; border-top-right-radius: 20px; z-index: 1000;
+        }
+        .nav-item { text-align: center; color: #9ca3af; font-size: 11px; font-weight: 600; display: flex; flex-direction: column; align-items: center; cursor: pointer; }
+        .nav-item.active { color: #4f46e5; }
+        .nav-icon { font-size: 22px; margin-bottom: 4px; }
     </style>
 </head>
 <body>
 
-    <!-- 1. LOGIN PAGE -->
-    <div id="login-screen">
-        <div class="login-box">
-            <h1 style="color: #1e3c72; margin-top:0;">Product AI 🏪</h1>
-            <p style="color: #666; font-size: 14px; margin-bottom: 25px;">Sell Smart, Sell More!</p>
-            <button class="login-btn" onclick="enterApp()">Enter Workspace</button>
-        </div>
+    <!-- SPLASH SCREEN -->
+    <div id="splash-screen">
+        <div class="logo-box">🛍️</div>
+        <h1 class="splash-title">Product AI</h1>
+        <p class="splash-subtitle">Sell Smart, Sell More!</p>
+        <div class="loader"><div class="loader-bar"></div></div>
     </div>
 
-    <!-- 2. DASHBOARD -->
-    <div id="dashboard-screen">
-        <div class="navbar">
-            <span>Product AI</span>
-            <span style="font-size: 24px;">⚙️</span>
-        </div>
-        <div class="container">
-            <div class="welcome-text">Hello, Abhishek! 👋</div>
-            <div class="subtitle">Ready to digitize some products today?</div>
-            <div class="feature-grid">
-                <div class="card" onclick="openUploadScreen()">
-                    <div class="icon">📷</div>
-                    <h3>Add Product</h3>
-                    <p>Camera or Gallery</p>
-                </div>
-                <div class="card" onclick="alert('Module loading...')">
-                    <div class="icon">✨</div>
-                    <h3>AI Image Magic</h3>
-                    <p>Background & Shadow</p>
-                </div>
-                <div class="card" onclick="alert('Module loading...')">
-                    <div class="icon">✍️</div>
-                    <h3>SEO Content</h3>
-                    <p>Titles & Details</p>
-                </div>
-                <div class="card" onclick="alert('Module loading...')">
-                    <div class="icon">📱</div>
-                    <h3>Social Post</h3>
-                    <p>Insta & WhatsApp</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 3. ADD PRODUCT FORM -->
-    <div id="upload-screen">
-        <div class="navbar">
-            <span class="back-btn" onclick="goBackToDashboard()">🔙 Back</span>
-            <span style="font-size: 18px;">New Product</span>
-            <span style="font-size: 20px;"></span> 
-        </div>
+    <!-- MAIN APP CONTAINER -->
+    <div id="main-app" class="app-container hidden">
         
-        <div class="container">
-            
-            <!-- Hidden Input for Camera/Gallery -->
-            <input type="file" id="cameraInput" accept="image/*" style="display: none;" onchange="previewImage(event)">
-
-            <!-- Upload Box -->
-            <div class="upload-box" id="uploadBox" onclick="document.getElementById('cameraInput').click()">
-                <div style="font-size: 40px; margin-bottom: 10px;">📸</div>
-                <h3 style="margin: 0;">Tap to Upload Photo</h3>
-                <p style="margin: 5px 0 0 0; font-size: 12px; color: #666;">Open Camera or Gallery</p>
-            </div>
-
-            <!-- Image Preview Box (Shuru mein hidden rahega) -->
-            <img id="imagePreview" onclick="document.getElementById('cameraInput').click()">
-            
-            <div class="form-group">
-                <label>Product Name</label>
-                <input type="text" id="prodName" placeholder="e.g. Blue Denim Jacket">
-            </div>
-            <div class="form-group">
-                <label>Price (₹)</label>
-                <input type="number" id="prodPrice" placeholder="e.g. 999">
-            </div>
-            
-            <button class="submit-btn" onclick="sendToBackend()">✨ Generate AI Magic</button>
+        <!-- HEADER -->
+        <div class="header">
+            <div class="header-icon">≡</div>
+            <div class="header-title">Product AI</div>
+            <div class="header-icon">🔔</div>
         </div>
+
+        <!-- DASHBOARD CONTENT -->
+        <div class="dashboard-content">
+            <div class="welcome-sec">
+                <h1>Welcome back! 👋</h1>
+                <p>Let's create something amazing today.</p>
+            </div>
+
+            <!-- Main CTA (Will trigger Upload Screen later) -->
+            <div class="create-btn" onclick="alert('Proceeding to Upload Screen...')">
+                <div>
+                    <h2>New Product</h2>
+                    <p>Create a new product with AI</p>
+                </div>
+                <div class="plus-icon">+</div>
+            </div>
+
+            <!-- Recent Products List -->
+            <div class="section-title">
+                <span>Recent Products</span>
+                <span class="view-all">View All</span>
+            </div>
+
+            <div class="product-card">
+                <div class="product-icon">🎧</div>
+                <div class="product-info">
+                    <h4>Wireless Headphones</h4>
+                    <p>$59.99</p>
+                    <div class="status-badge">Published</div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-icon">⌚</div>
+                <div class="product-info">
+                    <h4>Smart Watch Pro</h4>
+                    <p>$89.99</p>
+                    <div style="background: #fef9c3; color: #854d0e;" class="status-badge">Draft</div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- BOTTOM NAVIGATION BAR -->
+        <div class="bottom-nav">
+            <div class="nav-item active">
+                <div class="nav-icon">🏠</div>
+                <span>Home</span>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">📦</div>
+                <span>Products</span>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">📊</div>
+                <span>Analytics</span>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">👤</div>
+                <span>Profile</span>
+            </div>
+        </div>
+
     </div>
 
+    <!-- MAGIC JAVASCRIPT -->
     <script>
-        function enterApp() {
-            document.getElementById("login-screen").style.display = "none";
-            document.getElementById("dashboard-screen").style.display = "block";
-        }
-        
-        function openUploadScreen() {
-            document.getElementById("dashboard-screen").style.display = "none";
-            document.getElementById("upload-screen").style.display = "block";
-        }
-        
-        function goBackToDashboard() {
-            document.getElementById("upload-screen").style.display = "none";
-            document.getElementById("dashboard-screen").style.display = "block";
-        }
-
-        // PHOTO PREVIEW LOGIC
-        function previewImage(event) {
-            var reader = new FileReader();
-            reader.onload = function() {
-                var imgElement = document.getElementById('imagePreview');
-                var boxElement = document.getElementById('uploadBox');
-                
-                imgElement.src = reader.result;
-                imgElement.style.display = 'block'; // Photo show karo
-                boxElement.style.display = 'none';  // Upload box hata do
-            }
-            if(event.target.files[0]) {
-                reader.readAsDataURL(event.target.files[0]);
-            }
-        }
-
-        // FUTURE BACKEND LOGIC PREPARATION
-        function sendToBackend() {
-            var name = document.getElementById('prodName').value;
-            var price = document.getElementById('prodPrice').value;
-            
-            if(name === "" || price === "") {
-                alert("Bhai, pehle Product ka naam aur price toh likho!");
-                return;
-            }
-            
-            alert("App Architecture Check: \n1. Photo Captured ✅\n2. Details Ready ✅\n3. Sending to Node.js Backend 🚀\n(Gemini API integration next!)");
-        }
+        // Splash screen ko 2.5 seconds ke baad hide karke dashboard show karna
+        setTimeout(function() {
+            document.getElementById('splash-screen').classList.add('hidden');
+            document.getElementById('main-app').classList.remove('hidden');
+        }, 2500);
     </script>
 
 </body>
