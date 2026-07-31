@@ -37,9 +37,8 @@
         .card {
             background: white; padding: 20px 15px; border-radius: 15px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.05); text-align: center;
-            border: 1px solid #eee; cursor: pointer; transition: 0.2s;
+            border: 1px solid #eee; cursor: pointer;
         }
-        .card:active { transform: scale(0.95); background: #f0f8ff; }
         .card .icon { font-size: 35px; margin-bottom: 10px; }
         .card h3 { margin: 0 0 5px 0; color: #333; font-size: 15px; }
         .card p { margin: 0; color: #888; font-size: 12px; }
@@ -50,11 +49,18 @@
         
         .upload-box {
             background: white; border: 2px dashed #1e3c72; border-radius: 15px;
-            padding: 30px; text-align: center; margin-bottom: 20px;
+            padding: 40px 20px; text-align: center; margin-bottom: 20px;
             color: #1e3c72; cursor: pointer; transition: 0.2s;
         }
         .upload-box:active { background: #eef2f5; }
         
+        /* Photo Preview Style */
+        #imagePreview {
+            display: none; width: 100%; border-radius: 15px; 
+            margin-bottom: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            object-fit: cover; max-height: 300px;
+        }
+
         .form-group { margin-bottom: 15px; }
         .form-group label { display: block; margin-bottom: 5px; font-weight: bold; color: #333; font-size: 14px;}
         .form-group input, .form-group select {
@@ -79,38 +85,32 @@
         </div>
     </div>
 
-    <!-- 2. MAIN DASHBOARD -->
+    <!-- 2. DASHBOARD -->
     <div id="dashboard-screen">
         <div class="navbar">
             <span>Product AI</span>
             <span style="font-size: 24px;">⚙️</span>
         </div>
-        
         <div class="container">
             <div class="welcome-text">Hello, Abhishek! 👋</div>
             <div class="subtitle">Ready to digitize some products today?</div>
-            
             <div class="feature-grid">
-                <!-- Is card par click karne se form khulega -->
                 <div class="card" onclick="openUploadScreen()">
                     <div class="icon">📷</div>
                     <h3>Add Product</h3>
                     <p>Camera or Gallery</p>
                 </div>
-                
-                <div class="card" onclick="alert('AI Image Enhancement tool jaldi aayega!')">
+                <div class="card" onclick="alert('Module loading...')">
                     <div class="icon">✨</div>
                     <h3>AI Image Magic</h3>
                     <p>Background & Shadow</p>
                 </div>
-                
-                <div class="card" onclick="alert('SEO Content Generator jaldi aayega!')">
+                <div class="card" onclick="alert('Module loading...')">
                     <div class="icon">✍️</div>
                     <h3>SEO Content</h3>
                     <p>Titles & Details</p>
                 </div>
-                
-                <div class="card" onclick="alert('Social Media Maker jaldi aayega!')">
+                <div class="card" onclick="alert('Module loading...')">
                     <div class="icon">📱</div>
                     <h3>Social Post</h3>
                     <p>Insta & WhatsApp</p>
@@ -119,77 +119,85 @@
         </div>
     </div>
 
-    <!-- 3. ADD PRODUCT FORM SCREEN -->
+    <!-- 3. ADD PRODUCT FORM -->
     <div id="upload-screen">
         <div class="navbar">
             <span class="back-btn" onclick="goBackToDashboard()">🔙 Back</span>
             <span style="font-size: 18px;">New Product</span>
-            <span style="font-size: 20px;"></span> <!-- Khali space balance ke liye -->
+            <span style="font-size: 20px;"></span> 
         </div>
         
         <div class="container">
             
-            <!-- Photo Upload Area -->
-            <div class="upload-box" onclick="triggerCamera()">
+            <!-- Hidden Input for Camera/Gallery -->
+            <input type="file" id="cameraInput" accept="image/*" style="display: none;" onchange="previewImage(event)">
+
+            <!-- Upload Box -->
+            <div class="upload-box" id="uploadBox" onclick="document.getElementById('cameraInput').click()">
                 <div style="font-size: 40px; margin-bottom: 10px;">📸</div>
                 <h3 style="margin: 0;">Tap to Upload Photo</h3>
-                <p style="margin: 5px 0 0 0; font-size: 12px; color: #666;">Use Camera or Gallery</p>
+                <p style="margin: 5px 0 0 0; font-size: 12px; color: #666;">Open Camera or Gallery</p>
             </div>
+
+            <!-- Image Preview Box (Shuru mein hidden rahega) -->
+            <img id="imagePreview" onclick="document.getElementById('cameraInput').click()">
             
-            <!-- Product Details Form -->
             <div class="form-group">
                 <label>Product Name</label>
-                <input type="text" placeholder="e.g. Blue Denim Jacket">
+                <input type="text" id="prodName" placeholder="e.g. Blue Denim Jacket">
             </div>
-            
             <div class="form-group">
                 <label>Price (₹)</label>
-                <input type="number" placeholder="e.g. 999">
+                <input type="number" id="prodPrice" placeholder="e.g. 999">
             </div>
             
-            <div class="form-group">
-                <label>Category</label>
-                <select>
-                    <option>Clothing & Fashion</option>
-                    <option>Electronics</option>
-                    <option>Home & Kitchen</option>
-                    <option>Beauty & Cosmetics</option>
-                    <option>Others</option>
-                </select>
-            </div>
-            
-            <button class="submit-btn" onclick="generateAI()">✨ Generate AI Magic</button>
+            <button class="submit-btn" onclick="sendToBackend()">✨ Generate AI Magic</button>
         </div>
     </div>
 
-    <!-- JAVASCRIPT: Pages ko chalane ke liye -->
     <script>
-        // Login se Dashboard
         function enterApp() {
             document.getElementById("login-screen").style.display = "none";
             document.getElementById("dashboard-screen").style.display = "block";
         }
         
-        // Dashboard se Upload Form
         function openUploadScreen() {
             document.getElementById("dashboard-screen").style.display = "none";
             document.getElementById("upload-screen").style.display = "block";
         }
         
-        // Upload Form se wapas Dashboard (Back Button)
         function goBackToDashboard() {
             document.getElementById("upload-screen").style.display = "none";
             document.getElementById("dashboard-screen").style.display = "block";
         }
 
-        // Camera Button ke liye Placeholder
-        function triggerCamera() {
-            alert("Permission Required: Phone Camera / Gallery opening code yahan integrate hoga!");
+        // PHOTO PREVIEW LOGIC
+        function previewImage(event) {
+            var reader = new FileReader();
+            reader.onload = function() {
+                var imgElement = document.getElementById('imagePreview');
+                var boxElement = document.getElementById('uploadBox');
+                
+                imgElement.src = reader.result;
+                imgElement.style.display = 'block'; // Photo show karo
+                boxElement.style.display = 'none';  // Upload box hata do
+            }
+            if(event.target.files[0]) {
+                reader.readAsDataURL(event.target.files[0]);
+            }
         }
 
-        // Submit Button ke liye Placeholder
-        function generateAI() {
-            alert("Processing... Yahan par Gemini API text likhegi aur AI Image banayegi!");
+        // FUTURE BACKEND LOGIC PREPARATION
+        function sendToBackend() {
+            var name = document.getElementById('prodName').value;
+            var price = document.getElementById('prodPrice').value;
+            
+            if(name === "" || price === "") {
+                alert("Bhai, pehle Product ka naam aur price toh likho!");
+                return;
+            }
+            
+            alert("App Architecture Check: \n1. Photo Captured ✅\n2. Details Ready ✅\n3. Sending to Node.js Backend 🚀\n(Gemini API integration next!)");
         }
     </script>
 
