@@ -31,7 +31,7 @@ jobs:
       - name: Prepare Web Assets
         run: |
           mkdir -p dist
-          echo "<html><body>Loading...</body></html>" > dist/index.html
+          cp index.html dist/index.html
 
       - name: Add Capacitor Android
         run: |
