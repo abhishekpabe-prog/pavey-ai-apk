@@ -8,20 +8,14 @@
     <style>
         body { margin: 0; padding: 0; font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #0f172a; }
         .hidden { display: none !important; }
-        
-        /* Global Screen Setup - Padding bottom is for the global nav bar */
         .screen { height: 100vh; overflow-y: auto; background-color: #f8fafc; padding-bottom: 90px; box-sizing: border-box; }
-        
-        /* Universal Header */
         .top-header { padding: 20px; display: flex; justify-content: space-between; align-items: center; background: white; border-bottom: 1px solid #f1f5f9; position: sticky; top: 0; z-index: 50; }
         .back-btn { font-size: 20px; cursor: pointer; color: #0f172a; font-weight: bold; }
         .header-title { font-size: 16px; font-weight: 700; }
         .header-icon { font-size: 20px; position: relative; }
         .notification-dot { position: absolute; top: 0; right: -2px; width: 8px; height: 8px; background-color: #ef4444; border-radius: 50%; border: 2px solid white; }
 
-        /* =========================================
-           1. SPLASH SCREEN
-           ========================================= */
+        /* 1. SPLASH SCREEN */
         #splash-screen { padding-bottom: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; background: radial-gradient(circle at center, #2e1065 0%, #090514 100%); color: white; position: relative; z-index: 9999; }
         .splash-bag { width: 85px; height: 95px; background: linear-gradient(135deg, #a855f7, #6366f1); border-radius: 18px 18px 14px 14px; display: flex; justify-content: center; align-items: center; box-shadow: 0 15px 35px rgba(139, 92, 246, 0.5); position: relative; margin-bottom: 30px; }
         .splash-bag::before { content: ''; position: absolute; top: -22px; width: 40px; height: 40px; border: 6px solid #8b5cf6; border-radius: 50%; z-index: -1; }
@@ -31,15 +25,13 @@
         .loader-bar { width: 0%; height: 100%; background: linear-gradient(90deg, #8b5cf6, #c084fc); animation: loadBar 2s ease-out forwards; }
         @keyframes loadBar { 0% { width: 0%; } 100% { width: 100%; } }
 
-        /* =========================================
-           2. DASHBOARD SCREEN
-           ========================================= */
+        /* 2. DASHBOARD SCREEN */
         .dash-header { padding: 25px 20px 10px 20px; display: flex; justify-content: space-between; align-items: flex-start; }
         .dash-header h1 { font-size: 22px; margin: 0; font-weight: 700; color: #0f172a; }
         .dash-header p { font-size: 14px; color: #64748b; margin: 5px 0 0 0; }
         .dashboard-content { padding: 0 20px; }
-        .main-cta-card { background-color: #f5f3ff; border: 1px solid #ede9fe; padding: 20px; border-radius: 16px; display: flex; justify-content: space-between; align-items: center; margin-top: 15px; margin-bottom: 20px; cursor: pointer; transition: 0.2s; }
-        .main-cta-card h2 { margin: 0; font-size: 18px; font-weight: 700; color: #0f172a; }
+        .main-cta-card { background-color: #f5f3ff; border: 1px solid #ede9fe; padding: 20px; border-radius: 16px; display: flex; justify-content: space-between; align-items: center; margin-top: 15px; margin-bottom: 20px; cursor: pointer; }
+        .main-cta-card h2 { margin: 0; font-size: 18px; font-weight: 700; }
         .main-cta-card p { margin: 4px 0 0 0; font-size: 13px; color: #475569; }
         .main-cta-btn { background-color: #6d28d9; color: white; width: 45px; height: 45px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; box-shadow: 0 4px 10px rgba(109, 40, 217, 0.3); }
         .dash-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
@@ -47,78 +39,98 @@
         .dash-card h3 { margin: 10px 0 3px 0; font-size: 14px; font-weight: 600; }
         .dash-card p { margin: 0; font-size: 12px; color: #64748b; }
 
-        /* =========================================
-           3. UPLOAD SCREEN (Updated)
-           ========================================= */
+        /* 3. UPLOAD SCREEN */
         .upload-content { padding: 20px; background: white; height: 100%; }
-        .section-desc { font-size: 14px; color: #475569; margin-bottom: 15px; }
         .btn-row { display: flex; gap: 15px; margin-bottom: 25px; }
-        .media-btn { flex: 1; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 15px; background: white; border: 1px solid #e2e8f0; border-radius: 12px; font-weight: 600; font-size: 14px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
+        .media-btn { flex: 1; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 15px; border: 1px solid #e2e8f0; border-radius: 12px; font-weight: 600; font-size: 14px; cursor: pointer; }
         .dashed-box { border: 2px dashed #c4b5fd; background: #fdfcff; padding: 40px 20px; border-radius: 16px; text-align: center; cursor: pointer; margin-bottom: 30px; }
-        .dashed-box h4 { margin: 15px 0 5px 0; font-size: 15px; color: #0f172a; }
-        .dashed-box p { margin: 0; font-size: 12px; color: #64748b; }
-        .voice-box { display: flex; align-items: center; background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 5px 5px 5px 15px; }
+        .voice-box { display: flex; align-items: center; border: 1px solid #e2e8f0; border-radius: 12px; padding: 5px 5px 5px 15px; }
         .voice-box input { flex: 1; border: none; outline: none; font-size: 14px; }
         .mic-btn { background: #6d28d9; color: white; width: 45px; height: 45px; border-radius: 10px; display: flex; justify-content: center; align-items: center; font-size: 20px; cursor: pointer; }
 
-        /* =========================================
-           4. PRODUCT DETAILS SCREEN
-           ========================================= */
+        /* 4. DETAILS SCREEN */
         .form-content { padding: 20px; background: white; }
         .input-group { margin-bottom: 18px; }
-        .input-label { display: block; font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 8px; }
-        .form-control { width: 100%; padding: 14px; border: 1px solid #e2e8f0; border-radius: 10px; font-size: 14px; font-family: 'Inter', sans-serif; box-sizing: border-box; background: white; }
-        .qty-row { display: flex; border: 1px solid #e2e8f0; border-radius: 10px; overflow: hidden; width: 100%; }
-        .qty-btn { flex: 1; background: white; border: none; font-size: 18px; cursor: pointer; padding: 10px; }
-        .qty-input { flex: 2; text-align: center; border: none; border-left: 1px solid #e2e8f0; border-right: 1px solid #e2e8f0; font-size: 14px; }
-        .magic-btn { width: 100%; padding: 16px; background: linear-gradient(90deg, #6d28d9, #9333ea); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 10px; box-shadow: 0 10px 20px rgba(109, 40, 217, 0.3); }
+        .input-label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 8px; }
+        .form-control { width: 100%; padding: 14px; border: 1px solid #e2e8f0; border-radius: 10px; font-size: 14px; font-family: 'Inter', sans-serif; box-sizing: border-box; }
+        .qty-row { display: flex; border: 1px solid #e2e8f0; border-radius: 10px; overflow: hidden; }
+        .qty-btn { flex: 1; background: white; border: none; font-size: 18px; padding: 10px; }
+        .qty-input { flex: 2; text-align: center; border: none; border-left: 1px solid #e2e8f0; border-right: 1px solid #e2e8f0; }
+        .magic-btn { width: 100%; padding: 16px; background: linear-gradient(90deg, #6d28d9, #9333ea); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 10px; }
 
-        /* =========================================
-           5. AI GENERATING SCREEN
-           ========================================= */
+        /* 5. AI GENERATING SCREEN */
         .gen-content { padding: 20px; background: white; text-align: center; height: 100%; }
-        .gen-subtitle { font-size: 14px; color: #64748b; margin-bottom: 30px; }
-        .task-list { background: #fdfcff; border: 1px solid #f1f5f9; border-radius: 16px; padding: 20px; text-align: left; margin-bottom: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.02); }
+        .task-list { background: #fdfcff; border: 1px solid #f1f5f9; border-radius: 16px; padding: 20px; text-align: left; margin-bottom: 30px; }
         .task-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .task-item:last-child { margin-bottom: 0; }
-        .task-left { display: flex; align-items: center; gap: 12px; font-size: 14px; font-weight: 600; color: #0f172a; }
+        .task-left { display: flex; align-items: center; gap: 12px; font-size: 14px; font-weight: 600; }
         .check-circle { width: 22px; height: 22px; background: #22c55e; color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 12px; }
         .spin-circle { width: 22px; height: 22px; border: 3px solid #e2e8f0; border-top: 3px solid #6d28d9; border-radius: 50%; animation: spin 1s linear infinite; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .status-text { font-size: 13px; font-weight: 600; }
-        .status-done { color: #22c55e; }
-        .status-prog { color: #64748b; font-weight: 400; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
         .time-box { background: #f5f3ff; border-radius: 12px; padding: 20px; }
-        .time-box h4 { margin: 0 0 5px 0; color: #6d28d9; font-size: 14px; }
-        .time-box h2 { margin: 0; font-size: 20px; font-weight: 700; color: #0f172a; }
 
-        /* =========================================
-           6. AI GENERATED RESULT SCREEN
-           ========================================= */
-        .result-content { padding: 20px; background: white; }
-        .tabs { display: flex; justify-content: space-between; border-bottom: 1px solid #e2e8f0; margin-bottom: 20px; }
-        .tab { padding: 10px 0; font-size: 14px; font-weight: 600; color: #64748b; cursor: pointer; }
-        .tab.active { color: #6d28d9; border-bottom: 2px solid #6d28d9; }
-        .section-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .section-row h3 { margin: 0; font-size: 16px; font-weight: 700; }
-        .section-row span { font-size: 13px; color: #6d28d9; font-weight: 600; cursor: pointer; }
+        /* 6. RESULT SCREEN */
+        .result-content { padding: 20px; background: white; padding-bottom: 100px; }
         .img-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 10px; margin-bottom: 20px; }
-        .main-img { width: 100%; height: 100%; object-fit: cover; border-radius: 12px; border: 1px solid #f1f5f9; }
+        .main-img { width: 100%; height: 100%; object-fit: cover; border-radius: 12px; }
         .side-imgs { display: flex; flex-direction: column; gap: 10px; }
-        .sub-img { width: 100%; height: 130px; object-fit: cover; border-radius: 12px; border: 1px solid #f1f5f9; }
-        .seo-box { background: #f8fafc; border: 1px solid #f1f5f9; padding: 15px; border-radius: 12px; }
-        .seo-box h4 { margin: 0 0 10px 0; font-size: 14px; }
-        .seo-box p { margin: 0; font-size: 14px; color: #475569; line-height: 1.5; }
+        .sub-img { width: 100%; height: 130px; object-fit: cover; border-radius: 12px; }
+        .seo-box { background: #f8fafc; border: 1px solid #f1f5f9; padding: 15px; border-radius: 12px; margin-bottom: 20px; }
+        .proceed-publish-btn { width: 100%; padding: 16px; background: #0f172a; color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; }
 
         /* =========================================
-           7. GLOBAL BOTTOM NAV
+           7. PUBLISH OPTIONS SCREEN (NEW - Screen 9)
            ========================================= */
-        #global-nav { position: fixed; bottom: 0; width: 100%; background: white; padding: 10px 0; display: flex; justify-content: space-around; align-items: center; box-shadow: 0 -4px 15px rgba(0,0,0,0.04); z-index: 1000; }
+        .publish-content { padding: 20px; background: white; min-height: 100%; }
+        .publish-desc { font-size: 14px; color: #64748b; margin-bottom: 20px; text-align: center; }
+        .platform-item { display: flex; justify-content: space-between; align-items: center; padding: 16px; background: white; border: 1px solid #e2e8f0; border-radius: 12px; margin-bottom: 12px; }
+        .platform-left { display: flex; align-items: center; gap: 15px; font-weight: 600; font-size: 15px; color: #0f172a; }
+        .platform-icon { font-size: 24px; width: 40px; height: 40px; display: flex; justify-content: center; align-items: center; border-radius: 8px; background: #f8fafc; }
+        .connect-btn { color: #6d28d9; border: 1px solid #6d28d9; background: transparent; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; }
+        .connect-btn.connected { background: #6d28d9; color: white; border: none; }
+        .publish-now-btn { width: 100%; padding: 16px; background: #4f46e5; color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; margin-top: 15px; cursor: pointer; box-shadow: 0 10px 20px rgba(79, 70, 229, 0.3); }
+
+        /* =========================================
+           8. SUCCESS SCREEN (NEW - Screen 10)
+           ========================================= */
+        #success-screen { background: linear-gradient(180deg, #022c22 0%, #064e3b 100%); color: white; padding-bottom: 90px; text-align: center; position: relative; overflow: hidden; }
+        .success-header { padding: 50px 20px 20px; position: relative; z-index: 10; }
+        .check-icon-large { width: 80px; height: 80px; background: #22c55e; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 40px; margin: 0 auto 20px; box-shadow: 0 0 20px rgba(34, 197, 94, 0.4); }
+        .success-title { font-size: 26px; font-weight: 800; margin: 0 0 10px 0; }
+        .success-subtitle { font-size: 15px; color: #d1fae5; line-height: 1.4; margin-bottom: 30px; }
+        
+        .success-card { background: white; border-radius: 16px; padding: 15px; display: flex; gap: 15px; text-align: left; margin: 0 20px 30px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); position: relative; z-index: 10; }
+        .success-card img { width: 90px; height: 100px; object-fit: cover; border-radius: 10px; background: #f8fafc; }
+        .success-card-info { display: flex; flex-direction: column; justify-content: center; flex: 1; }
+        .success-card-title { font-size: 14px; font-weight: 600; color: #0f172a; margin: 0 0 5px 0; line-height: 1.3; }
+        .success-card-price { font-size: 18px; font-weight: 700; color: #0f172a; margin: 0 0 10px 0; }
+        .success-badge { background: #dcfce7; color: #166534; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 700; align-self: flex-start; }
+        
+        .success-actions { padding: 0 20px; display: flex; flex-direction: column; gap: 12px; position: relative; z-index: 10; }
+        .outline-btn { width: 100%; padding: 16px; background: transparent; color: white; border: 1px solid #10b981; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer; transition: 0.2s; }
+        
+        /* Confetti Effect */
+        .confetti { position: absolute; width: 8px; height: 15px; background: #fbbf24; top: 15%; left: 20%; transform: rotate(45deg); border-radius: 2px; z-index: 1; }
+        .c2 { background: #34d399; top: 10%; left: 80%; transform: rotate(-30deg); }
+        .c3 { background: #60a5fa; top: 25%; left: 10%; transform: rotate(15deg); width: 10px; height: 10px; border-radius: 50%; }
+        .c4 { background: #f87171; top: 30%; left: 85%; transform: rotate(60deg); }
+        .c5 { background: #fbbf24; top: 8%; left: 50%; transform: rotate(-15deg); }
+
+        /* =========================================
+           GLOBAL BOTTOM NAVIGATION
+           ========================================= */
+        .global-nav { position: fixed; bottom: 0; width: 100%; background: white; padding: 10px 0; display: flex; justify-content: space-around; align-items: center; box-shadow: 0 -4px 15px rgba(0,0,0,0.04); z-index: 1000; transition: background 0.3s; }
         .nav-item { text-align: center; color: #94a3b8; font-size: 11px; font-weight: 600; cursor: pointer; display: flex; flex-direction: column; align-items: center;}
         .nav-item.active { color: #6d28d9; }
         .nav-icon { font-size: 20px; margin-bottom: 4px; }
         .nav-fab-container { position: relative; top: -15px; }
         .nav-fab { background: #6d28d9; color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 26px; box-shadow: 0 4px 12px rgba(109, 40, 217, 0.4); border: 4px solid #f8fafc; cursor: pointer; }
+
+        /* Dark Nav Variant for Success Screen */
+        .global-nav.dark-mode { background: #022c22; border-top: 1px solid #064e3b; box-shadow: none; }
+        .global-nav.dark-mode .nav-item { color: #a7f3d0; }
+        .global-nav.dark-mode .nav-item.active { color: white; }
+        .global-nav.dark-mode .nav-fab { border-color: #022c22; }
+
     </style>
 </head>
 <body>
@@ -133,25 +145,17 @@
     <!-- 2. DASHBOARD SCREEN -->
     <div id="dashboard-screen" class="screen hidden">
         <div class="dash-header">
-            <div>
-                <h1>Hello, Abhishek 👋</h1>
-                <p>What do you want to sell today?</p>
-            </div>
+            <div><h1>Hello, Abhishek 👋</h1><p>What do you want to sell today?</p></div>
             <div class="header-icon">🔔<div class="notification-dot"></div></div>
         </div>
         <div class="dashboard-content">
             <div class="main-cta-card" onclick="goToScreen('upload-screen')">
-                <div>
-                    <h2>Create New Product</h2>
-                    <p>Create products with AI</p>
-                </div>
+                <div><h2>Create New Product</h2><p>Create products with AI</p></div>
                 <div class="main-cta-btn">+</div>
             </div>
             <div class="dash-grid">
                 <div class="dash-card"><h3 style="color: #f59e0b;">📦 My Products</h3><p>12 Products</p></div>
                 <div class="dash-card"><h3 style="color: #6d28d9;">📄 Drafts</h3><p>3 Drafts</p></div>
-                <div class="dash-card"><h3 style="color: #6d28d9;">🗂️ Templates</h3><p>25+ Templates</p></div>
-                <div class="dash-card"><h3 style="color: #6d28d9;">✨ AI Tools</h3><p>All AI Features</p></div>
             </div>
         </div>
     </div>
@@ -161,27 +165,19 @@
         <div class="top-header">
             <div class="back-btn" onclick="goToScreen('dashboard-screen')">←</div>
             <div class="header-title">Upload Product</div>
-            <div class="header-icon">🔔<div class="notification-dot"></div></div>
+            <div class="header-icon">🔔</div>
         </div>
         <div class="upload-content">
-            <h3 style="margin: 0 0 5px 0;">Add Product Image</h3>
-            <div class="section-desc">Take a photo or upload from gallery</div>
-            
+            <input type="file" id="fakeInput" accept="image/*" style="display: none;" onchange="goToScreen('details-screen')">
             <div class="btn-row">
                 <div class="media-btn" onclick="document.getElementById('fakeInput').click()">📷 Camera</div>
                 <div class="media-btn" onclick="document.getElementById('fakeInput').click()">🖼️ Gallery</div>
             </div>
-
-            <!-- Hidden File Input that triggers next screen -->
-            <input type="file" id="fakeInput" accept="image/*" style="display: none;" onchange="goToScreen('details-screen')">
-
             <div class="dashed-box" onclick="document.getElementById('fakeInput').click()">
-                <div style="font-size: 32px; color: #0f172a;">📄+</div>
-                <h4>Or drop image here</h4>
+                <div style="font-size: 32px;">📄+</div>
+                <h4>Drop image here</h4>
                 <p>JPG, PNG, WebP (Max 10MB)</p>
             </div>
-
-            <h3 style="margin: 0 0 10px 0; font-size: 15px;">Or describe using voice</h3>
             <div class="voice-box">
                 <input type="text" placeholder="Speak about the product...">
                 <div class="mic-btn" onclick="goToScreen('details-screen')">🎙️</div>
@@ -194,37 +190,11 @@
         <div class="top-header">
             <div class="back-btn" onclick="goToScreen('upload-screen')">←</div>
             <div class="header-title">Product Details</div>
-            <div class="header-icon">🔔<div class="notification-dot"></div></div>
+            <div class="header-icon">🔔</div>
         </div>
         <div class="form-content">
-            <div class="input-group">
-                <label class="input-label">Product Name</label>
-                <input type="text" class="form-control" value="Men's Cotton T-Shirt">
-            </div>
-            <div class="input-group">
-                <label class="input-label">Price (₹)</label>
-                <input type="number" class="form-control" value="399">
-            </div>
-            <div class="input-group">
-                <label class="input-label">Category</label>
-                <select class="form-control"><option>T-Shirts</option></select>
-            </div>
-            <div class="input-group">
-                <label class="input-label">Brand</label>
-                <select class="form-control"><option>Pavey</option></select>
-            </div>
-            <div class="input-group">
-                <label class="input-label">Quantity</label>
-                <div class="qty-row">
-                    <button class="qty-btn">–</button>
-                    <input type="text" class="qty-input" value="50">
-                    <button class="qty-btn">+</button>
-                </div>
-            </div>
-            <div class="input-group">
-                <label class="input-label">Key Features (short)</label>
-                <input type="text" class="form-control" value="100% Cotton, Regular Fit, Round Neck">
-            </div>
+            <div class="input-group"><label class="input-label">Product Name</label><input type="text" class="form-control" value="Men's Cotton T-Shirt"></div>
+            <div class="input-group"><label class="input-label">Price (₹)</label><input type="number" class="form-control" value="399"></div>
             <button class="magic-btn" onclick="startAIGeneration()">Generate with AI ✨</button>
         </div>
     </div>
@@ -234,37 +204,13 @@
         <div class="top-header">
             <div class="back-btn" onclick="goToScreen('details-screen')">←</div>
             <div class="header-title">AI is Working</div>
-            <div class="header-icon">🔔<div class="notification-dot"></div></div>
+            <div class="header-icon">🔔</div>
         </div>
         <div class="gen-content">
-            <div class="gen-subtitle">Your product is getting ready...</div>
-            
             <div class="task-list">
-                <div class="task-item">
-                    <div class="task-left"><div class="check-circle">✓</div> Image Enhance</div>
-                    <div class="status-text status-done">Done</div>
-                </div>
-                <div class="task-item">
-                    <div class="task-left"><div class="check-circle">✓</div> Background Remove</div>
-                    <div class="status-text status-done">Done</div>
-                </div>
-                <div class="task-item">
-                    <div class="task-left"><div class="check-circle">✓</div> AI Product Images (Flux AI)</div>
-                    <div class="status-text status-done">Done</div>
-                </div>
-                <div class="task-item">
-                    <div class="task-left"><div class="check-circle">✓</div> SEO Content Generate (Gemini)</div>
-                    <div class="status-text status-done">Done</div>
-                </div>
-                <div class="task-item">
-                    <div class="task-left"><div class="spin-circle"></div> Pricing Suggestion</div>
-                    <div class="status-text status-prog">In Progress...</div>
-                </div>
-            </div>
-
-            <div class="time-box">
-                <h4>Estimated Time</h4>
-                <h2>20 - 30 Seconds</h2>
+                <div class="task-item"><div class="task-left"><div class="check-circle">✓</div> Image Enhance</div></div>
+                <div class="task-item"><div class="task-left"><div class="check-circle">✓</div> SEO Content Generate</div></div>
+                <div class="task-item"><div class="task-left"><div class="spin-circle"></div> Pricing Suggestion</div></div>
             </div>
         </div>
     </div>
@@ -277,37 +223,93 @@
             <div style="color: #6d28d9; font-size: 14px; font-weight: 600;">Save Draft</div>
         </div>
         <div class="result-content">
-            <div class="tabs">
-                <div class="tab active">All</div>
-                <div class="tab">Images</div>
-                <div class="tab">SEO</div>
-                <div class="tab">Pricing</div>
-                <div class="tab">Details</div>
-            </div>
-
-            <div class="section-row">
-                <h3>Generated Images</h3>
-                <span>See All ></span>
-            </div>
-
             <div class="img-grid">
-                <!-- Using placeholder images for the demo -->
                 <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=500&q=80" class="main-img">
                 <div class="side-imgs">
                     <img src="https://images.unsplash.com/photo-1581655353564-df123a1eb820?auto=format&fit=crop&w=300&q=80" class="sub-img">
                     <img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=300&q=80" class="sub-img">
                 </div>
             </div>
-
             <div class="seo-box">
                 <h4>SEO Title</h4>
                 <p>Premium Cotton Men's T-Shirt – Soft, Stylish & Durable</p>
             </div>
+            <!-- Action to go to Publish Options -->
+            <button class="proceed-publish-btn" onclick="goToScreen('publish-screen')">Proceed to Publish →</button>
+        </div>
+    </div>
+
+    <!-- 9. PUBLISH OPTIONS SCREEN -->
+    <div id="publish-screen" class="screen hidden">
+        <div class="top-header">
+            <div class="back-btn" onclick="goToScreen('result-screen')">←</div>
+            <div class="header-title">Publish Product</div>
+            <div class="header-icon">🔔<div class="notification-dot"></div></div>
+        </div>
+        <div class="publish-content">
+            <div class="publish-desc">Where do you want to publish?</div>
+            
+            <div class="platform-item">
+                <div class="platform-left"><div class="platform-icon" style="color:#22c55e;">🛍️</div> Shopify Store</div>
+                <button class="connect-btn connected">Connected</button> <!-- Connected state -->
+            </div>
+            <div class="platform-item">
+                <div class="platform-left"><div class="platform-icon" style="color:#9333ea;">🛒</div> WooCommerce</div>
+                <button class="connect-btn">Connect</button>
+            </div>
+            <div class="platform-item">
+                <div class="platform-left"><div class="platform-icon" style="color:#3b82f6;">📝</div> WordPress</div>
+                <button class="connect-btn">Connect</button>
+            </div>
+            <div class="platform-item">
+                <div class="platform-left"><div class="platform-icon" style="color:#f59e0b;">a</div> Amazon</div>
+                <button class="connect-btn">Connect</button>
+            </div>
+            <div class="platform-item">
+                <div class="platform-left"><div class="platform-icon" style="color:#eab308;">f</div> Flipkart</div>
+                <button class="connect-btn">Connect</button>
+            </div>
+            <div class="platform-item">
+                <div class="platform-left"><div class="platform-icon" style="color:#be123c;">m</div> Meesho</div>
+                <button class="connect-btn">Connect</button>
+            </div>
+
+            <button class="publish-now-btn" onclick="publishProduct()">Publish Now 🚀</button>
+        </div>
+    </div>
+
+    <!-- 10. PRODUCT PUBLISHED (SUCCESS SCREEN) -->
+    <div id="success-screen" class="screen hidden">
+        <!-- Confetti elements -->
+        <div class="confetti"></div>
+        <div class="confetti c2"></div>
+        <div class="confetti c3"></div>
+        <div class="confetti c4"></div>
+        <div class="confetti c5"></div>
+
+        <div class="success-header">
+            <div class="check-icon-large">✓</div>
+            <h1 class="success-title">Congratulations! 🎉</h1>
+            <p class="success-subtitle">Product Successfully Published<br>to Your Shopify Store</p>
+        </div>
+
+        <div class="success-card">
+            <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=200&q=80" alt="T-Shirt">
+            <div class="success-card-info">
+                <h3 class="success-card-title">Premium Cotton Men's T-Shirt</h3>
+                <p class="success-card-price">₹399</p>
+                <div class="success-badge">Published</div>
+            </div>
+        </div>
+
+        <div class="success-actions">
+            <button class="outline-btn" onclick="alert('Opening Shopify Store Link...')">View on Store ↗</button>
+            <button class="outline-btn" onclick="goToScreen('dashboard-screen')">Go to My Products</button>
         </div>
     </div>
 
     <!-- GLOBAL BOTTOM NAVIGATION -->
-    <div id="global-nav" class="hidden">
+    <div id="main-nav" class="global-nav hidden">
         <div class="nav-item active" onclick="goToScreen('dashboard-screen')"><div class="nav-icon">🏠</div>Home</div>
         <div class="nav-item"><div class="nav-icon">🛍️</div>Products</div>
         <div class="nav-fab-container" onclick="goToScreen('upload-screen')"><div class="nav-fab">+</div></div>
@@ -317,32 +319,48 @@
 
     <!-- MAGIC JAVASCRIPT FOR NAVIGATION -->
     <script>
-        // Start: Splash Screen Timer
+        // Initial Splash Timer
         setTimeout(() => {
             document.getElementById('splash-screen').classList.add('hidden');
             document.getElementById('dashboard-screen').classList.remove('hidden');
-            document.getElementById('global-nav').classList.remove('hidden'); // Show bottom nav
+            document.getElementById('main-nav').classList.remove('hidden');
         }, 2000);
 
-        // Function to smoothly switch between any screens
+        // Advanced Navigation Logic
         function goToScreen(targetScreenId) {
             // Hide all screens
             const screens = document.querySelectorAll('.screen');
             screens.forEach(screen => screen.classList.add('hidden'));
             
-            // Show the target screen
+            // Show Target Screen
             document.getElementById(targetScreenId).classList.remove('hidden');
-            window.scrollTo(0, 0); // Scroll back to top
+            window.scrollTo(0, 0);
+
+            // Handle Bottom Nav Theme (Dark on Success, Light on others)
+            const nav = document.getElementById('main-nav');
+            if(targetScreenId === 'success-screen') {
+                nav.classList.add('dark-mode');
+            } else {
+                nav.classList.remove('dark-mode');
+            }
         }
 
-        // Function to simulate AI processing time
         function startAIGeneration() {
             goToScreen('generating-screen');
+            setTimeout(() => { goToScreen('result-screen'); }, 2000); // Fast forward for demo
+        }
+
+        // Simulate Publishing Delay
+        function publishProduct() {
+            const btn = document.querySelector('.publish-now-btn');
+            btn.innerHTML = "Publishing... ⏳";
+            btn.style.opacity = "0.7";
             
-            // Wait 3.5 seconds to simulate API loading, then go to Result screen
             setTimeout(() => {
-                goToScreen('result-screen');
-            }, 3500);
+                btn.innerHTML = "Publish Now 🚀";
+                btn.style.opacity = "1";
+                goToScreen('success-screen'); // Go to final celebration screen
+            }, 1500);
         }
     </script>
 
