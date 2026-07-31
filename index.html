@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Pavey AI</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); /* Premium Dark Theme */
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .login-box {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            width: 85%;
+            max-width: 400px;
+            text-align: center;
+        }
+        .logo {
+            font-size: 36px;
+            font-weight: 800;
+            color: #203a43;
+            margin-bottom: 5px;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        .input-box {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .input-box label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .input-box input {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            box-sizing: border-box;
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .input-box input:focus {
+            border-color: #2c5364;
+        }
+        .login-btn {
+            background: #203a43;
+            color: white;
+            border: none;
+            padding: 15px;
+            width: 100%;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-box">
+        <div class="logo">Pavey AI 🚀</div>
+        <div class="subtitle">Welcome back! Please login to continue.</div>
+        
+        <div class="input-box">
+            <label>Email ID</label>
+            <input type="email" placeholder="Enter your email">
+        </div>
+        
+        <div class="input-box">
+            <label>Password</label>
+            <input type="password" placeholder="Enter your password">
+        </div>
+        
+        <!-- Yeh button click karne par ek chota sa message aayega! -->
+        <button class="login-btn" onclick="alert('Hello Abhishek bhai! Login System abhi under development hai. 😉')">Login</button>
+    </div>
+
+</body>
+</html>
