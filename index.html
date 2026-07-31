@@ -1,416 +1,236 @@
-/* ==========================================
-   AI PRODUCT STUDIO
-   STYLE.CSS - PART 1
-========================================== */
+<!-- ========================= -->
+<!-- HEADER -->
+<!-- ========================= -->
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
+<header class="header">
 
-html{
-    scroll-behavior:smooth;
-}
+    <div class="logo">
+        <h2>AI Product Studio</h2>
+    </div>
 
-body{
-    font-family:'Poppins',sans-serif;
-    background:#f5f9ff;
-    color:#222;
-    overflow-x:hidden;
-}
+    <nav class="navbar">
 
-img{
-    width:100%;
-    display:block;
-}
+        <a href="#">Home</a>
 
-a{
-    text-decoration:none;
-}
+        <a href="#">Features</a>
 
-section{
-    padding:90px 8%;
-}
+        <a href="#">How It Works</a>
 
-/* ==========================
-HEADER
-========================== */
+        <a href="#">Pricing</a>
 
-header{
+        <a href="#">FAQ</a>
 
-position:fixed;
+        <a href="#">Contact</a>
 
-top:0;
+    </nav>
 
-left:0;
+    <div class="nav-buttons">
 
-width:100%;
+        <a href="#" class="login-btn">
+            Login
+        </a>
 
-padding:18px 8%;
+        <a href="#" class="start-btn">
+            Start Free
+        </a>
 
-display:flex;
+    </div>
 
-justify-content:space-between;
+</header>
 
-align-items:center;
 
-background:#ffffffee;
 
-backdrop-filter:blur(15px);
+<!-- ========================= -->
+<!-- HERO -->
+<!-- ========================= -->
 
-z-index:1000;
+<section class="hero">
 
-box-shadow:0 5px 18px rgba(0,0,0,.05);
+    <div class="hero-left">
 
-}
+        <span class="badge">
 
-.logo{
+            🚀 AI Powered Product Listing
 
-display:flex;
+        </span>
 
-align-items:center;
+        <h1>
 
-gap:12px;
+            Create Professional Product Images
+            With Artificial Intelligence
 
-font-size:24px;
+        </h1>
 
-font-weight:700;
+        <p>
 
-color:#2563eb;
+            Upload one simple product photo.
+            AI automatically creates premium
+            product images, SEO content,
+            keywords and publishes directly
+            to Shopify.
 
-}
+        </p>
 
-.logo i{
+        <div class="hero-buttons">
 
-font-size:30px;
+            <a href="#" class="primary-btn">
 
-}
+                Start Free
 
-nav{
+            </a>
 
-display:flex;
+            <a href="#" class="secondary-btn">
 
-gap:35px;
+                Watch Demo
 
-}
+            </a>
 
-nav a{
+        </div>
 
-font-size:16px;
 
-font-weight:500;
 
-color:#444;
+        <div class="hero-stats">
 
-transition:.3s;
+            <div class="stat-card">
 
-}
+                <h2>
 
-nav a:hover{
+                    10K+
 
-color:#2563eb;
+                </h2>
 
-}
+                <p>
 
-.header-btn{
+                    Products Generated
 
-display:flex;
+                </p>
 
-gap:15px;
+            </div>
 
-}
+            <div class="stat-card">
 
-.login-btn{
+                <h2>
 
-padding:11px 26px;
+                    2K+
 
-border-radius:40px;
+                </h2>
 
-border:2px solid #2563eb;
+                <p>
 
-color:#2563eb;
+                    Active Stores
 
-font-weight:600;
+                </p>
 
-transition:.3s;
+            </div>
 
-}
+            <div class="stat-card">
 
-.login-btn:hover{
+                <h2>
 
-background:#2563eb;
+                    99%
 
-color:white;
+                </h2>
 
-}
+                <p>
 
-.start-btn{
+                    AI Accuracy
 
-padding:12px 30px;
+                </p>
 
-border-radius:40px;
+            </div>
 
-background:linear-gradient(135deg,#2563eb,#3b82f6);
+        </div>
 
-color:white;
+    </div>
 
-font-weight:600;
 
-box-shadow:0 15px 35px rgba(37,99,235,.35);
 
-transition:.35s;
 
-}
+    <div class="hero-right">
 
-.start-btn:hover{
+        <div class="dashboard">
 
-transform:translateY(-4px);
+            <div class="dashboard-header">
 
-}
+                <h3>
 
-/* ==========================
-HERO SECTION
-========================== */
+                    Dashboard
 
-.hero{
+                </h3>
 
-display:grid;
+                <span>
 
-grid-template-columns:1fr 1fr;
+                    ● Online
 
-align-items:center;
+                </span>
 
-gap:60px;
+            </div>
 
-padding-top:170px;
 
-}
+            <div class="upload-card">
 
-.hero h5{
+                <h4>
 
-display:inline-block;
+                    Upload Product
 
-padding:10px 18px;
+                </h4>
 
-background:#e8f1ff;
+                <p>
 
-color:#2563eb;
+                    Drag & Drop Product Image
 
-border-radius:50px;
+                </p>
 
-font-size:15px;
+                <button>
 
-margin-bottom:25px;
+                    Upload Image
 
-}
+                </button>
 
-.hero h1{
+            </div>
 
-font-size:62px;
 
-font-weight:700;
+            <div class="process-card">
 
-line-height:1.1;
+                <h4>
 
-margin-bottom:25px;
+                    AI Processing
 
-}
+                </h4>
 
-.hero p{
+                <div class="progress">
 
-font-size:18px;
+                    <div class="progress-bar"></div>
 
-line-height:1.9;
+                </div>
 
-color:#666;
+                <p>
 
-margin-bottom:35px;
+                    FLUX AI + Gemini AI
 
-max-width:580px;
+                </p>
 
-}
+            </div>
 
-.hero-buttons{
 
-display:flex;
+            <div class="publish-card">
 
-gap:20px;
+                <h4>
 
-margin-bottom:50px;
+                    Shopify
 
-}
+                </h4>
 
-.primary-btn{
+                <button>
 
-padding:18px 40px;
+                    Publish Product
 
-background:#2563eb;
+                </button>
 
-color:white;
+            </div>
 
-border-radius:50px;
+        </div>
 
-font-weight:600;
+    </div>
 
-box-shadow:0 15px 30px rgba(37,99,235,.30);
-
-transition:.3s;
-
-}
-
-.primary-btn:hover{
-
-transform:translateY(-4px);
-
-}
-
-.secondary-btn{
-
-padding:18px 40px;
-
-background:white;
-
-border:2px solid #2563eb;
-
-border-radius:50px;
-
-color:#2563eb;
-
-font-weight:600;
-
-transition:.3s;
-
-}
-
-.secondary-btn:hover{
-
-background:#2563eb;
-
-color:white;
-
-}
-
-/* ==========================
-STATS
-========================== */
-
-.hero-stats{
-
-display:flex;
-
-gap:35px;
-
-}
-
-.hero-stats div{
-
-background:white;
-
-padding:25px;
-
-border-radius:18px;
-
-box-shadow:0 12px 30px rgba(0,0,0,.06);
-
-min-width:140px;
-
-text-align:center;
-
-}
-
-.hero-stats h2{
-
-font-size:34px;
-
-color:#2563eb;
-
-margin-bottom:10px;
-
-}
-
-.hero-stats p{
-
-font-size:15px;
-
-margin:0;
-
-color:#666;
-
-}
-
-/* ==========================
-PHONE MOCKUP
-========================== */
-
-.phone{
-
-background:white;
-
-padding:18px;
-
-border-radius:35px;
-
-box-shadow:0 35px 80px rgba(0,0,0,.18);
-
-max-width:420px;
-
-margin:auto;
-
-transition:.4s;
-
-}
-
-.phone:hover{
-
-transform:translateY(-10px);
-
-}
-
-.phone img{
-
-border-radius:22px;
-
-}
-
-/* ==========================
-SECTION TITLE
-========================== */
-
-.section-title{
-
-text-align:center;
-
-margin-bottom:60px;
-
-}
-
-.section-title span{
-
-color:#2563eb;
-
-font-weight:600;
-
-letter-spacing:2px;
-
-}
-
-.section-title h2{
-
-font-size:48px;
-
-margin:18px 0;
-
-}
-
-.section-title p{
-
-font-size:18px;
-
-color:#666;
-
-max-width:700px;
-
-margin:auto;
-
-}
+</section>
