@@ -6,7 +6,6 @@
     <title>Product AI</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* CSS WAHI SAME HAI JO PEHLE THI (Pixel Perfect UI) */
         body { margin: 0; padding: 0; font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #0f172a; }
         .hidden { display: none !important; }
         .screen { height: 100vh; overflow-y: auto; background-color: #f8fafc; padding-bottom: 90px; box-sizing: border-box; }
@@ -49,14 +48,6 @@
         #img-preview-box { display: none; margin-bottom: 20px; position: relative; }
         #preview-image { width: 100%; border-radius: 16px; max-height: 250px; object-fit: cover; }
         .proceed-details-btn { width: 100%; padding: 16px; background: #6d28d9; color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 20px; }
-
-        /* 4. REAL LIVE CAMERA VIEW FINDER SCREEN */
-        #live-camera-screen { background: black; padding: 0; height: 100vh; position: relative; overflow: hidden; }
-        #cameraVideo { width: 100%; height: 100%; object-fit: cover; }
-        .camera-overlay { position: absolute; bottom: 0; width: 100%; padding: 30px 20px; display: flex; justify-content: space-around; align-items: center; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); box-sizing: border-box; }
-        .shutter-btn { width: 75px; height: 75px; background: white; border-radius: 50%; border: 4px solid rgba(255,255,255,0.4); cursor: pointer; display: flex; justify-content: center; align-items: center; box-shadow: 0 0 20px rgba(255,255,255,0.5); }
-        .shutter-inner { width: 63px; height: 63px; background: white; border-radius: 50%; border: 2px solid #000; }
-        .cam-back-btn { color: white; font-size: 16px; font-weight: 600; background: rgba(255,255,255,0.2); padding: 10px 20px; border-radius: 20px; cursor: pointer; backdrop-filter: blur(5px); }
 
         /* 5. DETAILS SCREEN */
         .form-content { padding: 20px; background: white; }
@@ -109,7 +100,7 @@
         <div class="loader"><div class="loader-bar"></div></div>
     </div>
 
-    <!-- 2. DASHBOARD SCREEN (Now Dynamic) -->
+    <!-- 2. DASHBOARD SCREEN -->
     <div id="dashboard-screen" class="screen hidden">
         <div class="dash-header">
             <div><h1>Hello, Abhishek 👋</h1><p>What do you want to sell today?</p></div>
@@ -120,24 +111,15 @@
                 <div><h2>Create New Product</h2><p>Create products with AI</p></div>
                 <div class="main-cta-btn">+</div>
             </div>
-            
             <div class="dash-grid">
                 <div class="dash-card">
                     <h3 style="color: #f59e0b;">📦 My Products</h3>
-                    <p id="total-products-count">0 Products</p> <!-- Dynamic Count -->
+                    <p id="total-products-count">0 Products</p> 
                 </div>
-                <div class="dash-card">
-                    <h3 style="color: #6d28d9;">📄 Drafts</h3>
-                    <p>0 Drafts</p>
-                </div>
+                <div class="dash-card"><h3 style="color: #6d28d9;">📄 Drafts</h3><p>0 Drafts</p></div>
             </div>
-
-            <!-- Dynamic Recent Products List -->
             <div class="section-title">Recent Products</div>
-            <div id="recent-products-list">
-                <!-- Products memory se yahan load honge -->
-            </div>
-            
+            <div id="recent-products-list"></div>
         </div>
     </div>
 
@@ -149,41 +131,32 @@
             <div class="header-icon">🔔</div>
         </div>
         <div class="upload-content">
-            <input type="file" id="galleryInput" accept="image/*" style="display: none;" onchange="handleGalleryImage(event)">
+            <!-- NATIVE CAMERA & GALLERY INPUTS -->
+            <input type="file" id="nativeCameraInput" accept="image/*" capture="environment" style="display: none;" onchange="handleImageInput(event)">
+            <input type="file" id="galleryInput" accept="image/*" style="display: none;" onchange="handleImageInput(event)">
 
             <div class="btn-row">
-                <div class="media-btn" onclick="startLiveCamera()">📷 Live Camera</div>
-                <div class="media-btn" onclick="document.getElementById('galleryInput').click()">🖼️ Gallery</div>
+                <!-- Direct Phone Camera trigger -->
+                <div class="media-btn" onclick="document.getElementById('nativeCameraInput').click()">📷 Open Camera</div>
+                <!-- Gallery trigger -->
+                <div class="media-btn" onclick="document.getElementById('galleryInput').click()">🖼️ Open Gallery</div>
             </div>
 
             <div id="img-preview-box">
                 <img id="preview-image" src="" alt="Product Preview">
             </div>
 
-            <div class="dashed-box" onclick="startLiveCamera()">
+            <div class="dashed-box" onclick="document.getElementById('nativeCameraInput').click()">
                 <div style="font-size: 32px;">📸</div>
-                <h4>Tap to Open Live Camera</h4>
-                <p>Instant photo capture for AI</p>
+                <h4>Tap to Take Photo</h4>
+                <p>Instant high-quality capture</p>
             </div>
 
             <button class="proceed-details-btn" id="proceedBtn" style="display:none;" onclick="goToScreen('details-screen')">Continue to Details →</button>
         </div>
     </div>
 
-    <!-- 4. LIVE CAMERA VIEW FINDER SCREEN -->
-    <div id="live-camera-screen" class="screen hidden">
-        <video id="cameraVideo" autoplay playsinline></video>
-        <canvas id="captureCanvas" style="display:none;"></canvas>
-        <div class="camera-overlay">
-            <div class="cam-back-btn" onclick="stopLiveCamera()">Cancel</div>
-            <div class="shutter-btn" onclick="takeSnapshot()">
-                <div class="shutter-inner"></div>
-            </div>
-            <div style="width: 70px;"></div>
-        </div>
-    </div>
-
-    <!-- 5. PRODUCT DETAILS SCREEN (Now with IDs for Data Collection) -->
+    <!-- 5. PRODUCT DETAILS SCREEN -->
     <div id="details-screen" class="screen hidden">
         <div class="top-header">
             <div class="back-btn" onclick="goToScreen('upload-screen')">←</div>
@@ -237,7 +210,6 @@
                 <h4>SEO Title</h4>
                 <p id="generated-seo-title">Generating best SEO title for your product...</p>
             </div>
-            <!-- Changed button to directly publish and save for now -->
             <button class="proceed-publish-btn" onclick="publishAndSaveProduct()">Publish Now 🚀</button>
         </div>
     </div>
@@ -269,21 +241,13 @@
         <div class="nav-item"><div class="nav-icon">👤</div>Profile</div>
     </div>
 
-    <!-- JAVASCRIPT LOGIC (WITH MEMORY / LOCAL STORAGE) -->
+    <!-- JAVASCRIPT LOGIC -->
     <script>
-        let mediaStream = null;
-        
-        // 🧠 Temporary memory for the current product being created
-        let currentProduct = {
-            name: "",
-            price: "",
-            imageBase64: ""
-        };
+        let currentProduct = { name: "", price: "", imageBase64: "" };
 
-        // Initialize App & Load Dashboard Data
         setTimeout(() => {
             document.getElementById('splash-screen').classList.add('hidden');
-            loadDashboardData(); // Load saved products immediately
+            loadDashboardData(); 
             document.getElementById('dashboard-screen').classList.remove('hidden');
             document.getElementById('main-nav').classList.remove('hidden');
         }, 2000);
@@ -294,28 +258,19 @@
             document.getElementById(targetScreenId).classList.remove('hidden');
             window.scrollTo(0, 0);
 
-            // Refresh Dashboard list whenever user goes back to home
-            if(targetScreenId === 'dashboard-screen') {
-                loadDashboardData();
-            }
+            if(targetScreenId === 'dashboard-screen') loadDashboardData();
         }
 
-        // --- DASHBOARD DATA LOADING (The Memory Engine) ---
         function loadDashboardData() {
-            // Get array from local storage (or empty array if null)
             let savedProducts = JSON.parse(localStorage.getItem('productAI_products')) || [];
-            
-            // Update the Top Count
             document.getElementById('total-products-count').innerText = savedProducts.length + " Products";
 
-            // Update Recent Products List
             let listContainer = document.getElementById('recent-products-list');
             let html = '';
 
             if(savedProducts.length === 0) {
                 html = '<div style="text-align:center; padding:20px; color:#94a3b8; font-size:13px;">No products yet. Create your first product!</div>';
             } else {
-                // Loop through array and create UI cards
                 for(let i = 0; i < savedProducts.length; i++) {
                     let p = savedProducts[i];
                     html += `
@@ -333,60 +288,24 @@
             listContainer.innerHTML = html;
         }
 
-        // --- LIVE CAMERA & IMAGE HANDLING ---
-        function startLiveCamera() {
-            goToScreen('live-camera-screen');
-            const videoElement = document.getElementById('cameraVideo');
-            navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: "environment" } }, audio: false })
-            .then(stream => {
-                mediaStream = stream;
-                videoElement.srcObject = stream;
-                videoElement.play();
-            })
-            .catch(err => {
-                alert("Camera permission denied!");
-                goToScreen('upload-screen');
-            });
-        }
-
-        function takeSnapshot() {
-            const videoElement = document.getElementById('cameraVideo');
-            const canvas = document.getElementById('captureCanvas');
-            canvas.width = videoElement.videoWidth || 640;
-            canvas.height = videoElement.videoHeight || 480;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
-            const imageDataUrl = canvas.toDataURL('image/png');
-            stopCameraStream();
-            saveImageToMemoryAndProceed(imageDataUrl);
-        }
-
-        function stopLiveCamera() { stopCameraStream(); goToScreen('upload-screen'); }
-        function stopCameraStream() { if (mediaStream) { mediaStream.getTracks().forEach(track => track.stop()); mediaStream = null; } }
-
-        function handleGalleryImage(event) {
+        // Unified Handler for both Camera and Gallery
+        function handleImageInput(event) {
             const file = event.target.files[0];
             if (file) {
                 const reader = new FileReader();
-                reader.onload = function(e) { saveImageToMemoryAndProceed(e.target.result); }
+                reader.onload = function(e) {
+                    const dataUrl = e.target.result;
+                    currentProduct.imageBase64 = dataUrl;
+                    
+                    document.getElementById('preview-image').src = dataUrl;
+                    document.getElementById('img-preview-box').style.display = 'block';
+                    document.getElementById('proceedBtn').style.display = 'block';
+                }
                 reader.readAsDataURL(file);
             }
         }
 
-        function saveImageToMemoryAndProceed(dataUrl) {
-            // Save to current session memory
-            currentProduct.imageBase64 = dataUrl;
-            
-            // Show preview on upload screen
-            document.getElementById('preview-image').src = dataUrl;
-            document.getElementById('img-preview-box').style.display = 'block';
-            document.getElementById('proceedBtn').style.display = 'block';
-            goToScreen('upload-screen');
-        }
-
-        // --- AI GENERATION & PUBLISHING ---
         function startAIGeneration() {
-            // Capture inputs from the form
             let nameInput = document.getElementById('prodNameInput').value;
             let priceInput = document.getElementById('prodPriceInput').value;
             
@@ -395,16 +314,12 @@
                 return;
             }
 
-            // Save to memory
             currentProduct.name = nameInput;
             currentProduct.price = priceInput;
 
-            // Go to Generating Screen
             goToScreen('generating-screen');
             
-            // Wait 2 seconds, then show Result Screen
             setTimeout(() => { 
-                // Populate Result Screen with memory data
                 document.getElementById('result-main-img').src = currentProduct.imageBase64;
                 document.getElementById('result-sub-img1').src = currentProduct.imageBase64;
                 document.getElementById('result-sub-img2').src = currentProduct.imageBase64;
@@ -415,21 +330,14 @@
         }
 
         function publishAndSaveProduct() {
-            // 1. Fetch old products from Local Storage
             let savedProducts = JSON.parse(localStorage.getItem('productAI_products')) || [];
-            
-            // 2. Add current product to the TOP of the array
             savedProducts.unshift(currentProduct);
-            
-            // 3. Save array back to Local Storage
             localStorage.setItem('productAI_products', JSON.stringify(savedProducts));
 
-            // 4. Update Success Screen UI
             document.getElementById('success-thumb-img').src = currentProduct.imageBase64;
             document.getElementById('success-title-text').innerText = currentProduct.name;
             document.getElementById('success-price-text').innerText = "₹" + currentProduct.price;
 
-            // 5. Show Success Screen
             goToScreen('success-screen');
         }
     </script>
