@@ -1,221 +1,417 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Product AI</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body { margin: 0; padding: 0; font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #0f172a; }
-        
-        .hidden { display: none !important; }
-        .screen { height: 100vh; overflow-y: auto; background-color: #f8fafc; }
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
-        /* --- 1. SPLASH SCREEN --- */
-        #splash-screen {
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            background: linear-gradient(135deg, #0f172a, #1e1b4b); color: white;
-        }
-        .logo-box { background: rgba(255,255,255,0.1); padding: 20px; border-radius: 20px; font-size: 50px; margin-bottom: 20px; }
-        .splash-title { font-size: 28px; font-weight: 700; margin: 0; }
-        .loader { width: 150px; height: 4px; background: rgba(255,255,255,0.2); margin-top: 50px; border-radius: 4px; overflow: hidden; }
-        .loader-bar { width: 50%; height: 100%; background: #6366f1; border-radius: 4px; animation: load 2s infinite ease-in-out; }
-        @keyframes load { 0% { transform: translateX(-100%); } 100% { transform: translateX(200%); } }
+    <title>AI Product Studio</title>
 
-        /* --- 2. DASHBOARD SCREEN --- */
-        #dashboard-screen { padding-bottom: 80px; }
-        .header { padding: 20px; display: flex; justify-content: space-between; align-items: center; background: white; }
-        .header-title { font-size: 18px; font-weight: 700; }
-        .dashboard-content { padding: 20px; }
-        .welcome-sec h1 { font-size: 24px; margin: 0; font-weight: 700; }
-        .welcome-sec p { font-size: 14px; color: #64748b; margin: 5px 0 20px 0; }
+    <link rel="stylesheet" href="style.css">
 
-        .create-btn {
-            background: linear-gradient(135deg, #4f46e5, #3b82f6); color: white; padding: 20px; border-radius: 16px; 
-            display: flex; justify-content: space-between; align-items: center; box-shadow: 0 10px 20px rgba(79, 70, 229, 0.25); cursor: pointer; margin-bottom: 25px; transition: 0.2s;
-        }
-        .create-btn:active { transform: scale(0.98); }
-        .create-btn h2 { margin: 0; font-size: 18px; font-weight: 600; }
-        .create-btn p { margin: 5px 0 0 0; font-size: 13px; opacity: 0.9; }
-        .plus-icon { background: rgba(255,255,255,0.2); width: 40px; height: 40px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; }
+    <link rel="preconnect"
+        href="https://fonts.googleapis.com">
 
-        .section-title { font-size: 16px; font-weight: 700; margin-bottom: 15px; display: flex; justify-content: space-between; }
-        .product-card { background: white; padding: 15px; border-radius: 12px; display: flex; align-items: center; margin-bottom: 10px; }
-        .product-icon { width: 50px; height: 50px; background: #f1f5f9; border-radius: 8px; display: flex; justify-content: center; align-items: center; font-size: 24px; margin-right: 15px; }
-        .product-info h4 { margin: 0; font-size: 15px; font-weight: 600;}
-        .status-badge { background: #dcfce7; color: #166534; padding: 3px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; margin-top: 5px; display: inline-block; }
+    <link rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin>
 
-        /* Bottom Nav */
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: white; padding: 12px 0; display: flex; justify-content: space-around; box-shadow: 0 -4px 10px rgba(0,0,0,0.05); }
-        .nav-item { text-align: center; color: #94a3b8; font-size: 11px; font-weight: 600; cursor: pointer; }
-        .nav-item.active { color: #4f46e5; }
-        .nav-icon { font-size: 22px; margin-bottom: 4px; }
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
 
-        /* --- 3. UPLOAD SCREEN --- */
-        #upload-screen { background: white; }
-        .upload-header { padding: 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; }
-        .back-btn { font-size: 20px; cursor: pointer; color: #0f172a; padding: 5px; }
-        .upload-header-title { font-size: 16px; font-weight: 600; }
-        
-        .upload-container { padding: 20px; }
-        
-        /* Dashed Box */
-        .dashed-upload-box {
-            border: 2px dashed #cbd5e1; border-radius: 16px; padding: 40px 20px; text-align: center;
-            background: #f8fafc; margin-bottom: 25px; cursor: pointer; transition: 0.2s;
-        }
-        .dashed-upload-box:active { background: #f1f5f9; border-color: #94a3b8; }
-        .upload-blue-icon { font-size: 40px; margin-bottom: 15px; color: #3b82f6; }
-        .dashed-upload-box h3 { margin: 0 0 5px 0; font-size: 16px; font-weight: 600; }
-        .dashed-upload-box p { margin: 0; font-size: 13px; color: #64748b; }
-        
-        /* Preview Image Area */
-        #img-preview-box { display: none; margin-bottom: 25px; position: relative; }
-        #preview-image { width: 100%; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); object-fit: cover; max-height: 350px; }
-        .change-photo-btn { position: absolute; bottom: 15px; right: 15px; background: rgba(0,0,0,0.6); color: white; padding: 8px 15px; border-radius: 20px; font-size: 12px; backdrop-filter: blur(5px); }
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
-        /* Quick Action Buttons */
-        .action-buttons { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 30px; }
-        .action-btn { flex: 1; background: white; border: 1px solid #e2e8f0; padding: 15px 10px; border-radius: 12px; text-align: center; font-size: 13px; font-weight: 500; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
-        .action-btn:active { background: #f8fafc; }
-        .action-btn-icon { font-size: 24px; margin-bottom: 8px; }
-
-        /* Tip Box */
-        .tip-box { background: #eff6ff; padding: 15px; border-radius: 12px; display: flex; align-items: flex-start; gap: 12px; }
-        .tip-box span { font-size: 20px; }
-        .tip-box p { margin: 0; font-size: 13px; color: #1e3a8a; line-height: 1.5; }
-
-        /* Next Button */
-        .next-btn { background: #0f172a; color: white; width: 100%; padding: 16px; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; margin-top: 30px; cursor: pointer; }
-    </style>
 </head>
+
 <body>
 
-    <!-- 1. SPLASH SCREEN -->
-    <div id="splash-screen" class="screen">
-        <div class="logo-box">🛍️</div>
-        <h1 class="splash-title">Product AI</h1>
-        <div class="loader"><div class="loader-bar"></div></div>
-    </div>
+<!-- ========================= -->
+<!-- HEADER -->
+<!-- ========================= -->
 
-    <!-- 2. DASHBOARD SCREEN -->
-    <div id="dashboard-screen" class="screen hidden">
-        <div class="header">
-            <div style="font-size: 24px;">≡</div>
-            <div class="header-title">AI Product Studio</div>
-            <div style="font-size: 20px;">🔔</div>
-        </div>
-        <div class="dashboard-content">
-            <div class="welcome-sec">
-                <h1>Welcome back! 👋</h1>
-                <p>Let's create something amazing today.</p>
-            </div>
+<header>
 
-            <!-- "New Product" Button opens Upload Screen -->
-            <div class="create-btn" onclick="openUploadScreen()">
-                <div>
-                    <h2>New Product</h2>
-                    <p>Create a new product with AI</p>
-                </div>
-                <div class="plus-icon">+</div>
-            </div>
+<div class="logo">
 
-            <div class="section-title"><span>Recent Products</span><span style="color: #4f46e5; font-size: 13px;">View All</span></div>
-            <div class="product-card">
-                <div class="product-icon">🎧</div>
-                <div><h4 style="margin: 0; font-size: 15px;">Wireless Headphones</h4><p style="margin: 3px 0 0 0; font-size: 13px; color: #64748b;">$59.99</p><div class="status-badge">Published</div></div>
-            </div>
-        </div>
-        <div class="bottom-nav">
-            <div class="nav-item active"><div class="nav-icon">🏠</div>Home</div>
-            <div class="nav-item"><div class="nav-icon">📦</div>Products</div>
-            <div class="nav-item"><div class="nav-icon">📊</div>Analytics</div>
-            <div class="nav-item"><div class="nav-icon">👤</div>Profile</div>
-        </div>
-    </div>
+<i class="fa-solid fa-cube"></i>
 
-    <!-- 3. UPLOAD SCREEN -->
-    <div id="upload-screen" class="screen hidden">
-        <div class="upload-header">
-            <div class="back-btn" onclick="closeUploadScreen()">←</div>
-            <div class="upload-header-title">Upload Product</div>
-            <div style="width: 20px;"></div> <!-- Empty space to center title -->
-        </div>
+<span>AI Product Studio</span>
 
-        <div class="upload-container">
-            <!-- Hidden Native File Input -->
-            <input type="file" id="nativeCamera" accept="image/*" style="display: none;" onchange="handleImage(event)">
+</div>
 
-            <!-- Dashed Upload Area -->
-            <div id="dashed-box" class="dashed-upload-box" onclick="document.getElementById('nativeCamera').click()">
-                <div class="upload-blue-icon">📷</div>
-                <h3>Upload Product Image</h3>
-                <p>Drag & drop or tap to upload</p>
-            </div>
+<nav>
 
-            <!-- Image Preview Area -->
-            <div id="img-preview-box">
-                <img id="preview-image" src="" alt="Product Preview">
-                <div class="change-photo-btn" onclick="document.getElementById('nativeCamera').click()">🔄 Change</div>
-            </div>
+<a href="#">Home</a>
 
-            <!-- 3 Action Buttons -->
-            <div class="action-buttons">
-                <div class="action-btn" onclick="document.getElementById('nativeCamera').click()">
-                    <div class="action-btn-icon">📸</div> Camera
-                </div>
-                <div class="action-btn" onclick="document.getElementById('nativeCamera').click()">
-                    <div class="action-btn-icon">🖼️</div> Gallery
-                </div>
-                <div class="action-btn" onclick="alert('Voice recognition starting...')">
-                    <div class="action-btn-icon">🎙️</div> Voice Input
-                </div>
-            </div>
+<a href="#">Features</a>
 
-            <!-- Tip -->
-            <div class="tip-box">
-                <span>💡</span>
-                <p><strong>Tip:</strong> For best results, upload a clear photo with good lighting and a plain background.</p>
-            </div>
+<a href="#">How It Works</a>
 
-            <!-- Next Step Button -->
-            <button class="next-btn" onclick="alert('Proceeding to Product Details (Screen 3)...')">Continue to Details →</button>
-        </div>
-    </div>
+<a href="#">Pricing</a>
 
-    <script>
-        // Splash to Dashboard Logic
-        setTimeout(() => {
-            document.getElementById('splash-screen').classList.add('hidden');
-            document.getElementById('dashboard-screen').classList.remove('hidden');
-        }, 2000);
+<a href="#">Contact</a>
 
-        // Screen Navigation Logic
-        function openUploadScreen() {
-            document.getElementById('dashboard-screen').classList.add('hidden');
-            document.getElementById('upload-screen').classList.remove('hidden');
-            window.scrollTo(0, 0); // Scroll to top
-        }
+</nav>
 
-        function closeUploadScreen() {
-            document.getElementById('upload-screen').classList.add('hidden');
-            document.getElementById('dashboard-screen').classList.remove('hidden');
-        }
+<div class="header-btn">
 
-        // Native Image Preview Logic
-        function handleImage(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('preview-image').src = e.target.result;
-                    document.getElementById('dashed-box').style.display = 'none';
-                    document.getElementById('img-preview-box').style.display = 'block';
-                }
-                reader.readAsDataURL(file);
-            }
-        }
-    </script>
+<a href="#" class="login-btn">
+
+Login
+
+</a>
+
+<a href="#" class="start-btn">
+
+Get Started
+
+</a>
+
+</div>
+
+</header>
+
+
+
+<!-- ========================= -->
+<!-- HERO SECTION -->
+<!-- ========================= -->
+
+<section class="hero">
+
+<div class="hero-left">
+
+<h5>
+
+🚀 AI Powered Product Listing
+
+</h5>
+
+<h1>
+
+Create Beautiful Product Images
+
+With AI in Seconds
+
+</h1>
+
+<p>
+
+Upload a simple product image and let AI generate
+
+professional product photos, SEO content, pricing,
+
+and publish directly to Shopify.
+
+</p>
+
+<div class="hero-buttons">
+
+<a href="#" class="primary-btn">
+
+Start Free
+
+</a>
+
+<a href="#" class="secondary-btn">
+
+Watch Demo
+
+</a>
+
+</div>
+
+<div class="hero-stats">
+
+<div>
+
+<h2>10K+</h2>
+
+<p>Products Generated</p>
+
+</div>
+
+<div>
+
+<h2>2K+</h2>
+
+<p>Active Stores</p>
+
+</div>
+
+<div>
+
+<h2>99%</h2>
+
+<p>AI Accuracy</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="hero-right">
+
+<div class="phone">
+
+<img src="assets/images/dashboard.png"
+alt="Dashboard">
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- ========================= -->
+<!-- FEATURES -->
+<!-- ========================= -->
+
+<section class="features">
+
+<div class="title">
+
+<h2>
+
+Everything Your Store Needs
+
+</h2>
+
+<p>
+
+Generate images, descriptions and publish
+
+products in one click.
+
+</p>
+
+</div>
+
+<div class="feature-grid">
+
+<div class="card">
+
+<i class="fa-solid fa-image"></i>
+
+<h3>
+
+AI Product Images
+
+</h3>
+
+<p>
+
+Generate premium studio quality product photos.
+
+</p>
+
+</div>
+
+<div class="card">
+
+<i class="fa-solid fa-wand-magic-sparkles"></i>
+
+<h3>
+
+Background Removal
+
+</h3>
+
+<p>
+
+Automatically remove unwanted backgrounds.
+
+</p>
+
+</div>
+
+<div class="card">
+
+<i class="fa-solid fa-pen"></i>
+
+<h3>
+
+SEO Content
+
+</h3>
+
+<p>
+
+Generate titles, descriptions and keywords.
+
+</p>
+
+</div>
+
+<div class="card">
+
+<i class="fa-solid fa-chart-line"></i>
+
+<h3>
+
+Pricing Suggestion
+
+</h3>
+
+<p>
+
+AI recommends the best selling price.
+
+</p>
+
+</div>
+
+<div class="card">
+
+<i class="fa-solid fa-store"></i>
+
+<h3>
+
+Shopify Publish
+
+</h3>
+
+<p>
+
+Publish products directly to your online store.
+
+</p>
+
+</div>
+
+<div class="card">
+
+<i class="fa-solid fa-bolt"></i>
+
+<h3>
+
+Lightning Fast
+
+</h3>
+
+<p>
+
+Create complete listings within seconds.
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- ========================= -->
+<!-- APP PREVIEW -->
+<!-- ========================= -->
+
+<section class="preview">
+
+<div class="preview-title">
+
+<h2>
+
+How AI Product Studio Works
+
+</h2>
+
+<p>
+
+Simple workflow from upload to publishing.
+
+</p>
+
+</div>
+
+<div class="steps">
+
+<div class="step">
+
+<span>1</span>
+
+<h4>
+
+Upload Product
+
+</h4>
+
+<p>
+
+Take a photo or upload from gallery.
+
+</p>
+
+</div>
+
+<div class="step">
+
+<span>2</span>
+
+<h4>
+
+AI Processing
+
+</h4>
+
+<p>
+
+Generate images and SEO automatically.
+
+</p>
+
+</div>
+
+<div class="step">
+
+<span>3</span>
+
+<h4>
+
+Review
+
+</h4>
+
+<p>
+
+Edit title, price and generated content.
+
+</p>
+
+</div>
+
+<div class="step">
+
+<span>4</span>
+
+<h4>
+
+Publish
+
+</h4>
+
+<p>
+
+One click publish to Shopify.
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<script src="script.js"></script>
 
 </body>
+
 </html>
