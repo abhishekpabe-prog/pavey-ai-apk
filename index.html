@@ -8,285 +8,341 @@
     <style>
         body { margin: 0; padding: 0; font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #0f172a; }
         .hidden { display: none !important; }
-        .screen { height: 100vh; overflow-y: auto; background-color: #f8fafc; }
+        
+        /* Global Screen Setup - Padding bottom is for the global nav bar */
+        .screen { height: 100vh; overflow-y: auto; background-color: #f8fafc; padding-bottom: 90px; box-sizing: border-box; }
+        
+        /* Universal Header */
+        .top-header { padding: 20px; display: flex; justify-content: space-between; align-items: center; background: white; border-bottom: 1px solid #f1f5f9; position: sticky; top: 0; z-index: 50; }
+        .back-btn { font-size: 20px; cursor: pointer; color: #0f172a; font-weight: bold; }
+        .header-title { font-size: 16px; font-weight: 700; }
+        .header-icon { font-size: 20px; position: relative; }
+        .notification-dot { position: absolute; top: 0; right: -2px; width: 8px; height: 8px; background-color: #ef4444; border-radius: 50%; border: 2px solid white; }
 
         /* =========================================
-           1. SPLASH SCREEN (Untouched)
+           1. SPLASH SCREEN
            ========================================= */
-        #splash-screen {
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            background: radial-gradient(circle at center, #2e1065 0%, #090514 100%); 
-            color: white; position: relative; z-index: 9999;
-        }
-        .splash-logo-wrapper { position: relative; margin-bottom: 25px; }
-        .splash-bag {
-            width: 85px; height: 95px; background: linear-gradient(135deg, #a855f7, #6366f1);
-            border-radius: 18px 18px 14px 14px; display: flex; justify-content: center; align-items: center;
-            box-shadow: 0 15px 35px rgba(139, 92, 246, 0.5), inset 0 8px 20px rgba(255,255,255,0.4);
-            position: relative; z-index: 2;
-        }
-        .splash-bag::before {
-            content: ''; position: absolute; top: -22px; width: 40px; height: 40px;
-            border: 6px solid #8b5cf6; border-radius: 50%; z-index: -1;
-        }
-        .splash-bag span { color: white; font-size: 36px; font-weight: 800; text-shadow: 0 2px 10px rgba(0,0,0,0.2); }
-        .sparkle { position: absolute; color: #e9d5ff; text-shadow: 0 0 10px white; animation: twinkle 1.5s infinite alternate; z-index: 3;}
-        .sparkle.s1 { top: -10px; right: -25px; font-size: 30px; }
-        .sparkle.s2 { top: 40px; right: -35px; font-size: 18px; }
-        @keyframes twinkle { 0% { opacity: 0.4; transform: scale(0.8); } 100% { opacity: 1; transform: scale(1.2); } }
-        .splash-title {
-            font-size: 34px; font-weight: 800; margin: 0;
-            background: linear-gradient(90deg, #e9d5ff, #a855f7);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
-        .splash-subtitle { font-size: 15px; color: #f1f5f9; margin-top: 8px; font-weight: 400; }
-        .loading-container { position: absolute; bottom: 12%; width: 55%; display: flex; flex-direction: column; align-items: center; }
-        .loading-text { font-size: 14px; color: #e2e8f0; margin-bottom: 12px; }
-        .loader { width: 100%; height: 6px; background: rgba(255,255,255,0.15); border-radius: 10px; overflow: hidden; }
-        .loader-bar { width: 0%; height: 100%; border-radius: 10px; background: linear-gradient(90deg, #8b5cf6, #c084fc); box-shadow: 0 0 12px #8b5cf6; animation: loadBar 2s ease-out forwards; }
+        #splash-screen { padding-bottom: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; background: radial-gradient(circle at center, #2e1065 0%, #090514 100%); color: white; position: relative; z-index: 9999; }
+        .splash-bag { width: 85px; height: 95px; background: linear-gradient(135deg, #a855f7, #6366f1); border-radius: 18px 18px 14px 14px; display: flex; justify-content: center; align-items: center; box-shadow: 0 15px 35px rgba(139, 92, 246, 0.5); position: relative; margin-bottom: 30px; }
+        .splash-bag::before { content: ''; position: absolute; top: -22px; width: 40px; height: 40px; border: 6px solid #8b5cf6; border-radius: 50%; z-index: -1; }
+        .splash-bag span { color: white; font-size: 36px; font-weight: 800; }
+        .splash-title { font-size: 34px; font-weight: 800; margin: 0; background: linear-gradient(90deg, #e9d5ff, #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .loader { position: absolute; bottom: 15%; width: 50%; height: 6px; background: rgba(255,255,255,0.15); border-radius: 10px; overflow: hidden; }
+        .loader-bar { width: 0%; height: 100%; background: linear-gradient(90deg, #8b5cf6, #c084fc); animation: loadBar 2s ease-out forwards; }
         @keyframes loadBar { 0% { width: 0%; } 100% { width: 100%; } }
 
         /* =========================================
-           2. NEW DASHBOARD SCREEN
+           2. DASHBOARD SCREEN
            ========================================= */
-        #dashboard-screen { padding-bottom: 90px; }
-        
-        /* Header */
         .dash-header { padding: 25px 20px 10px 20px; display: flex; justify-content: space-between; align-items: flex-start; }
-        .welcome-text h1 { font-size: 22px; margin: 0; font-weight: 700; color: #0f172a; }
-        .welcome-text p { font-size: 14px; color: #64748b; margin: 5px 0 0 0; }
-        .notification-icon { position: relative; font-size: 24px; color: #0f172a; }
-        .notification-dot { position: absolute; top: 2px; right: 2px; width: 8px; height: 8px; background-color: #ef4444; border-radius: 50%; border: 2px solid #f8fafc; }
-
+        .dash-header h1 { font-size: 22px; margin: 0; font-weight: 700; color: #0f172a; }
+        .dash-header p { font-size: 14px; color: #64748b; margin: 5px 0 0 0; }
         .dashboard-content { padding: 0 20px; }
-
-        /* Main CTA Card */
-        .main-cta-card {
-            background-color: #f5f3ff; /* Light purple */
-            border: 1px solid #ede9fe;
-            padding: 20px; border-radius: 16px; 
-            display: flex; justify-content: space-between; align-items: center; 
-            margin-top: 15px; margin-bottom: 20px; cursor: pointer; transition: 0.2s;
-        }
-        .main-cta-card:active { transform: scale(0.98); }
-        .main-cta-text h2 { margin: 0; font-size: 18px; font-weight: 700; color: #0f172a; }
-        .main-cta-text p { margin: 4px 0 0 0; font-size: 13px; color: #475569; }
-        .main-cta-btn {
-            background-color: #6d28d9; color: white; width: 50px; height: 50px; 
-            border-radius: 50%; display: flex; justify-content: center; align-items: center; 
-            font-size: 28px; font-weight: 300; box-shadow: 0 4px 10px rgba(109, 40, 217, 0.3);
-        }
-
-        /* 2x2 Grid */
+        .main-cta-card { background-color: #f5f3ff; border: 1px solid #ede9fe; padding: 20px; border-radius: 16px; display: flex; justify-content: space-between; align-items: center; margin-top: 15px; margin-bottom: 20px; cursor: pointer; transition: 0.2s; }
+        .main-cta-card h2 { margin: 0; font-size: 18px; font-weight: 700; color: #0f172a; }
+        .main-cta-card p { margin: 4px 0 0 0; font-size: 13px; color: #475569; }
+        .main-cta-btn { background-color: #6d28d9; color: white; width: 45px; height: 45px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; box-shadow: 0 4px 10px rgba(109, 40, 217, 0.3); }
         .dash-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
-        .dash-card { background: white; padding: 16px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); cursor: pointer; transition: 0.2s;}
-        .dash-card:active { transform: scale(0.97); }
-        .dash-card-icon { font-size: 22px; margin-bottom: 12px; }
-        .dash-card h3 { margin: 0; font-size: 15px; font-weight: 600; color: #0f172a; }
-        .dash-card p { margin: 4px 0 0 0; font-size: 12px; color: #64748b; }
+        .dash-card { background: white; padding: 16px; border-radius: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
+        .dash-card h3 { margin: 10px 0 3px 0; font-size: 14px; font-weight: 600; }
+        .dash-card p { margin: 0; font-size: 12px; color: #64748b; }
 
-        /* How it works card */
-        .info-card {
-            background: white; padding: 16px; border-radius: 16px; display: flex; align-items: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03); cursor: pointer; margin-bottom: 20px;
-        }
-        .info-icon { font-size: 24px; margin-right: 15px; }
-        .info-text h3 { margin: 0; font-size: 15px; font-weight: 600; color: #0f172a; }
-        .info-text p { margin: 4px 0 0 0; font-size: 12px; color: #64748b; }
+        /* =========================================
+           3. UPLOAD SCREEN (Updated)
+           ========================================= */
+        .upload-content { padding: 20px; background: white; height: 100%; }
+        .section-desc { font-size: 14px; color: #475569; margin-bottom: 15px; }
+        .btn-row { display: flex; gap: 15px; margin-bottom: 25px; }
+        .media-btn { flex: 1; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 15px; background: white; border: 1px solid #e2e8f0; border-radius: 12px; font-weight: 600; font-size: 14px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
+        .dashed-box { border: 2px dashed #c4b5fd; background: #fdfcff; padding: 40px 20px; border-radius: 16px; text-align: center; cursor: pointer; margin-bottom: 30px; }
+        .dashed-box h4 { margin: 15px 0 5px 0; font-size: 15px; color: #0f172a; }
+        .dashed-box p { margin: 0; font-size: 12px; color: #64748b; }
+        .voice-box { display: flex; align-items: center; background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 5px 5px 5px 15px; }
+        .voice-box input { flex: 1; border: none; outline: none; font-size: 14px; }
+        .mic-btn { background: #6d28d9; color: white; width: 45px; height: 45px; border-radius: 10px; display: flex; justify-content: center; align-items: center; font-size: 20px; cursor: pointer; }
 
-        /* Custom Bottom Nav (With Center FAB) */
-        .bottom-nav { 
-            position: fixed; bottom: 0; width: 100%; background: white; padding: 10px 0; 
-            display: flex; justify-content: space-around; align-items: center;
-            box-shadow: 0 -4px 15px rgba(0,0,0,0.04); z-index: 1000;
-        }
+        /* =========================================
+           4. PRODUCT DETAILS SCREEN
+           ========================================= */
+        .form-content { padding: 20px; background: white; }
+        .input-group { margin-bottom: 18px; }
+        .input-label { display: block; font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 8px; }
+        .form-control { width: 100%; padding: 14px; border: 1px solid #e2e8f0; border-radius: 10px; font-size: 14px; font-family: 'Inter', sans-serif; box-sizing: border-box; background: white; }
+        .qty-row { display: flex; border: 1px solid #e2e8f0; border-radius: 10px; overflow: hidden; width: 100%; }
+        .qty-btn { flex: 1; background: white; border: none; font-size: 18px; cursor: pointer; padding: 10px; }
+        .qty-input { flex: 2; text-align: center; border: none; border-left: 1px solid #e2e8f0; border-right: 1px solid #e2e8f0; font-size: 14px; }
+        .magic-btn { width: 100%; padding: 16px; background: linear-gradient(90deg, #6d28d9, #9333ea); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 10px; box-shadow: 0 10px 20px rgba(109, 40, 217, 0.3); }
+
+        /* =========================================
+           5. AI GENERATING SCREEN
+           ========================================= */
+        .gen-content { padding: 20px; background: white; text-align: center; height: 100%; }
+        .gen-subtitle { font-size: 14px; color: #64748b; margin-bottom: 30px; }
+        .task-list { background: #fdfcff; border: 1px solid #f1f5f9; border-radius: 16px; padding: 20px; text-align: left; margin-bottom: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.02); }
+        .task-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .task-item:last-child { margin-bottom: 0; }
+        .task-left { display: flex; align-items: center; gap: 12px; font-size: 14px; font-weight: 600; color: #0f172a; }
+        .check-circle { width: 22px; height: 22px; background: #22c55e; color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 12px; }
+        .spin-circle { width: 22px; height: 22px; border: 3px solid #e2e8f0; border-top: 3px solid #6d28d9; border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .status-text { font-size: 13px; font-weight: 600; }
+        .status-done { color: #22c55e; }
+        .status-prog { color: #64748b; font-weight: 400; }
+        .time-box { background: #f5f3ff; border-radius: 12px; padding: 20px; }
+        .time-box h4 { margin: 0 0 5px 0; color: #6d28d9; font-size: 14px; }
+        .time-box h2 { margin: 0; font-size: 20px; font-weight: 700; color: #0f172a; }
+
+        /* =========================================
+           6. AI GENERATED RESULT SCREEN
+           ========================================= */
+        .result-content { padding: 20px; background: white; }
+        .tabs { display: flex; justify-content: space-between; border-bottom: 1px solid #e2e8f0; margin-bottom: 20px; }
+        .tab { padding: 10px 0; font-size: 14px; font-weight: 600; color: #64748b; cursor: pointer; }
+        .tab.active { color: #6d28d9; border-bottom: 2px solid #6d28d9; }
+        .section-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .section-row h3 { margin: 0; font-size: 16px; font-weight: 700; }
+        .section-row span { font-size: 13px; color: #6d28d9; font-weight: 600; cursor: pointer; }
+        .img-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 10px; margin-bottom: 20px; }
+        .main-img { width: 100%; height: 100%; object-fit: cover; border-radius: 12px; border: 1px solid #f1f5f9; }
+        .side-imgs { display: flex; flex-direction: column; gap: 10px; }
+        .sub-img { width: 100%; height: 130px; object-fit: cover; border-radius: 12px; border: 1px solid #f1f5f9; }
+        .seo-box { background: #f8fafc; border: 1px solid #f1f5f9; padding: 15px; border-radius: 12px; }
+        .seo-box h4 { margin: 0 0 10px 0; font-size: 14px; }
+        .seo-box p { margin: 0; font-size: 14px; color: #475569; line-height: 1.5; }
+
+        /* =========================================
+           7. GLOBAL BOTTOM NAV
+           ========================================= */
+        #global-nav { position: fixed; bottom: 0; width: 100%; background: white; padding: 10px 0; display: flex; justify-content: space-around; align-items: center; box-shadow: 0 -4px 15px rgba(0,0,0,0.04); z-index: 1000; }
         .nav-item { text-align: center; color: #94a3b8; font-size: 11px; font-weight: 600; cursor: pointer; display: flex; flex-direction: column; align-items: center;}
         .nav-item.active { color: #6d28d9; }
         .nav-icon { font-size: 20px; margin-bottom: 4px; }
-        
         .nav-fab-container { position: relative; top: -15px; }
-        .nav-fab {
-            background: #6d28d9; color: white; width: 50px; height: 50px; border-radius: 50%;
-            display: flex; justify-content: center; align-items: center; font-size: 26px;
-            box-shadow: 0 4px 12px rgba(109, 40, 217, 0.4); border: 4px solid #f8fafc; cursor: pointer;
-        }
-
-        /* =========================================
-           3. UPLOAD SCREEN (Untouched)
-           ========================================= */
-        #upload-screen { background: white; }
-        .upload-header { padding: 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; }
-        .back-btn { font-size: 20px; cursor: pointer; color: #0f172a; padding: 5px; }
-        .upload-header-title { font-size: 16px; font-weight: 600; }
-        .upload-container { padding: 20px; }
-        .dashed-upload-box { border: 2px dashed #cbd5e1; border-radius: 16px; padding: 40px 20px; text-align: center; background: #f8fafc; margin-bottom: 25px; cursor: pointer; transition: 0.2s; }
-        .dashed-upload-box:active { background: #f1f5f9; border-color: #94a3b8; }
-        .upload-blue-icon { font-size: 40px; margin-bottom: 15px; color: #3b82f6; }
-        .dashed-upload-box h3 { margin: 0 0 5px 0; font-size: 16px; font-weight: 600; }
-        .dashed-upload-box p { margin: 0; font-size: 13px; color: #64748b; }
-        #img-preview-box { display: none; margin-bottom: 25px; position: relative; }
-        #preview-image { width: 100%; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); object-fit: cover; max-height: 350px; }
-        .change-photo-btn { position: absolute; bottom: 15px; right: 15px; background: rgba(0,0,0,0.6); color: white; padding: 8px 15px; border-radius: 20px; font-size: 12px; backdrop-filter: blur(5px); }
-        .action-buttons { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 30px; }
-        .action-btn { flex: 1; background: white; border: 1px solid #e2e8f0; padding: 15px 10px; border-radius: 12px; text-align: center; font-size: 13px; font-weight: 500; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
-        .action-btn-icon { font-size: 24px; margin-bottom: 8px; }
-        .tip-box { background: #eff6ff; padding: 15px; border-radius: 12px; display: flex; align-items: flex-start; gap: 12px; }
-        .tip-box span { font-size: 20px; }
-        .tip-box p { margin: 0; font-size: 13px; color: #1e3a8a; line-height: 1.5; }
-        .next-btn { background: #0f172a; color: white; width: 100%; padding: 16px; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; margin-top: 30px; cursor: pointer; }
+        .nav-fab { background: #6d28d9; color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 26px; box-shadow: 0 4px 12px rgba(109, 40, 217, 0.4); border: 4px solid #f8fafc; cursor: pointer; }
     </style>
 </head>
 <body>
 
     <!-- 1. SPLASH SCREEN -->
     <div id="splash-screen" class="screen">
-        <div class="splash-logo-wrapper">
-            <div class="splash-bag"><span>AI</span></div>
-            <div class="sparkle s1">✦</div><div class="sparkle s2">✦</div>
-        </div>
+        <div class="splash-bag"><span>AI</span></div>
         <h1 class="splash-title">Product AI</h1>
-        <p class="splash-subtitle">Sell Smart, Sell More!</p>
-        <div class="loading-container">
-            <div class="loading-text">Loading...</div>
-            <div class="loader"><div class="loader-bar"></div></div>
-        </div>
+        <div class="loader"><div class="loader-bar"></div></div>
     </div>
 
-    <!-- 2. DASHBOARD SCREEN (UPDATED) -->
+    <!-- 2. DASHBOARD SCREEN -->
     <div id="dashboard-screen" class="screen hidden">
-        
-        <!-- Header -->
         <div class="dash-header">
-            <div class="welcome-text">
+            <div>
                 <h1>Hello, Abhishek 👋</h1>
                 <p>What do you want to sell today?</p>
             </div>
-            <div class="notification-icon">
-                🔔
-                <div class="notification-dot"></div>
-            </div>
+            <div class="header-icon">🔔<div class="notification-dot"></div></div>
         </div>
-
         <div class="dashboard-content">
-            <!-- Main CTA -->
-            <div class="main-cta-card" onclick="openUploadScreen()">
-                <div class="main-cta-text">
+            <div class="main-cta-card" onclick="goToScreen('upload-screen')">
+                <div>
                     <h2>Create New Product</h2>
                     <p>Create products with AI</p>
                 </div>
                 <div class="main-cta-btn">+</div>
             </div>
-
-            <!-- 2x2 Grid Features -->
             <div class="dash-grid">
-                <div class="dash-card">
-                    <div class="dash-card-icon">📦</div>
-                    <h3>My Products</h3>
-                    <p>12 Products</p>
-                </div>
-                <div class="dash-card">
-                    <div class="dash-card-icon" style="color: #6d28d9;">📄</div>
-                    <h3>Drafts</h3>
-                    <p>3 Drafts</p>
-                </div>
-                <div class="dash-card">
-                    <div class="dash-card-icon" style="color: #6d28d9;">🗂️</div>
-                    <h3>Templates</h3>
-                    <p>25+ Templates</p>
-                </div>
-                <div class="dash-card">
-                    <div class="dash-card-icon" style="color: #6d28d9;">✨</div>
-                    <h3>AI Tools</h3>
-                    <p>All AI Features</p>
-                </div>
+                <div class="dash-card"><h3 style="color: #f59e0b;">📦 My Products</h3><p>12 Products</p></div>
+                <div class="dash-card"><h3 style="color: #6d28d9;">📄 Drafts</h3><p>3 Drafts</p></div>
+                <div class="dash-card"><h3 style="color: #6d28d9;">🗂️ Templates</h3><p>25+ Templates</p></div>
+                <div class="dash-card"><h3 style="color: #6d28d9;">✨ AI Tools</h3><p>All AI Features</p></div>
             </div>
-
-            <!-- How it works -->
-            <div class="info-card">
-                <div class="info-icon" style="color: #6d28d9;">❓</div>
-                <div class="info-text">
-                    <h3>How it Works?</h3>
-                    <p>Watch in short videos</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Updated Bottom Navigation with Floating Button -->
-        <div class="bottom-nav">
-            <div class="nav-item active"><div class="nav-icon">🏠</div>Home</div>
-            <div class="nav-item"><div class="nav-icon">🛍️</div>Products</div>
-            
-            <div class="nav-fab-container" onclick="openUploadScreen()">
-                <div class="nav-fab">+</div>
-            </div>
-            
-            <div class="nav-item"><div class="nav-icon">📋</div>Orders</div>
-            <div class="nav-item"><div class="nav-icon">👤</div>Profile</div>
         </div>
     </div>
 
-    <!-- 3. UPLOAD SCREEN (Untouched) -->
+    <!-- 3. UPLOAD SCREEN -->
     <div id="upload-screen" class="screen hidden">
-        <div class="upload-header">
-            <div class="back-btn" onclick="closeUploadScreen()">←</div>
-            <div class="upload-header-title">Upload Product</div>
-            <div style="width: 20px;"></div> 
+        <div class="top-header">
+            <div class="back-btn" onclick="goToScreen('dashboard-screen')">←</div>
+            <div class="header-title">Upload Product</div>
+            <div class="header-icon">🔔<div class="notification-dot"></div></div>
         </div>
-        <div class="upload-container">
-            <input type="file" id="nativeCamera" accept="image/*" style="display: none;" onchange="handleImage(event)">
-            <div id="dashed-box" class="dashed-upload-box" onclick="document.getElementById('nativeCamera').click()">
-                <div class="upload-blue-icon">📷</div>
-                <h3>Upload Product Image</h3>
-                <p>Drag & drop or tap to upload</p>
+        <div class="upload-content">
+            <h3 style="margin: 0 0 5px 0;">Add Product Image</h3>
+            <div class="section-desc">Take a photo or upload from gallery</div>
+            
+            <div class="btn-row">
+                <div class="media-btn" onclick="document.getElementById('fakeInput').click()">📷 Camera</div>
+                <div class="media-btn" onclick="document.getElementById('fakeInput').click()">🖼️ Gallery</div>
             </div>
-            <div id="img-preview-box">
-                <img id="preview-image" src="" alt="Product Preview">
-                <div class="change-photo-btn" onclick="document.getElementById('nativeCamera').click()">🔄 Change</div>
+
+            <!-- Hidden File Input that triggers next screen -->
+            <input type="file" id="fakeInput" accept="image/*" style="display: none;" onchange="goToScreen('details-screen')">
+
+            <div class="dashed-box" onclick="document.getElementById('fakeInput').click()">
+                <div style="font-size: 32px; color: #0f172a;">📄+</div>
+                <h4>Or drop image here</h4>
+                <p>JPG, PNG, WebP (Max 10MB)</p>
             </div>
-            <div class="action-buttons">
-                <div class="action-btn" onclick="document.getElementById('nativeCamera').click()"><div class="action-btn-icon">📸</div> Camera</div>
-                <div class="action-btn" onclick="document.getElementById('nativeCamera').click()"><div class="action-btn-icon">🖼️</div> Gallery</div>
-                <div class="action-btn" onclick="alert('Voice recognition starting...')"><div class="action-btn-icon">🎙️</div> Voice Input</div>
+
+            <h3 style="margin: 0 0 10px 0; font-size: 15px;">Or describe using voice</h3>
+            <div class="voice-box">
+                <input type="text" placeholder="Speak about the product...">
+                <div class="mic-btn" onclick="goToScreen('details-screen')">🎙️</div>
             </div>
-            <div class="tip-box">
-                <span>💡</span>
-                <p><strong>Tip:</strong> For best results, upload a clear photo with good lighting and a plain background.</p>
-            </div>
-            <button class="next-btn" onclick="alert('Proceeding to Product Details...')">Continue to Details →</button>
         </div>
     </div>
 
+    <!-- 4. PRODUCT DETAILS SCREEN -->
+    <div id="details-screen" class="screen hidden">
+        <div class="top-header">
+            <div class="back-btn" onclick="goToScreen('upload-screen')">←</div>
+            <div class="header-title">Product Details</div>
+            <div class="header-icon">🔔<div class="notification-dot"></div></div>
+        </div>
+        <div class="form-content">
+            <div class="input-group">
+                <label class="input-label">Product Name</label>
+                <input type="text" class="form-control" value="Men's Cotton T-Shirt">
+            </div>
+            <div class="input-group">
+                <label class="input-label">Price (₹)</label>
+                <input type="number" class="form-control" value="399">
+            </div>
+            <div class="input-group">
+                <label class="input-label">Category</label>
+                <select class="form-control"><option>T-Shirts</option></select>
+            </div>
+            <div class="input-group">
+                <label class="input-label">Brand</label>
+                <select class="form-control"><option>Pavey</option></select>
+            </div>
+            <div class="input-group">
+                <label class="input-label">Quantity</label>
+                <div class="qty-row">
+                    <button class="qty-btn">–</button>
+                    <input type="text" class="qty-input" value="50">
+                    <button class="qty-btn">+</button>
+                </div>
+            </div>
+            <div class="input-group">
+                <label class="input-label">Key Features (short)</label>
+                <input type="text" class="form-control" value="100% Cotton, Regular Fit, Round Neck">
+            </div>
+            <button class="magic-btn" onclick="startAIGeneration()">Generate with AI ✨</button>
+        </div>
+    </div>
+
+    <!-- 5. AI GENERATING SCREEN -->
+    <div id="generating-screen" class="screen hidden">
+        <div class="top-header">
+            <div class="back-btn" onclick="goToScreen('details-screen')">←</div>
+            <div class="header-title">AI is Working</div>
+            <div class="header-icon">🔔<div class="notification-dot"></div></div>
+        </div>
+        <div class="gen-content">
+            <div class="gen-subtitle">Your product is getting ready...</div>
+            
+            <div class="task-list">
+                <div class="task-item">
+                    <div class="task-left"><div class="check-circle">✓</div> Image Enhance</div>
+                    <div class="status-text status-done">Done</div>
+                </div>
+                <div class="task-item">
+                    <div class="task-left"><div class="check-circle">✓</div> Background Remove</div>
+                    <div class="status-text status-done">Done</div>
+                </div>
+                <div class="task-item">
+                    <div class="task-left"><div class="check-circle">✓</div> AI Product Images (Flux AI)</div>
+                    <div class="status-text status-done">Done</div>
+                </div>
+                <div class="task-item">
+                    <div class="task-left"><div class="check-circle">✓</div> SEO Content Generate (Gemini)</div>
+                    <div class="status-text status-done">Done</div>
+                </div>
+                <div class="task-item">
+                    <div class="task-left"><div class="spin-circle"></div> Pricing Suggestion</div>
+                    <div class="status-text status-prog">In Progress...</div>
+                </div>
+            </div>
+
+            <div class="time-box">
+                <h4>Estimated Time</h4>
+                <h2>20 - 30 Seconds</h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6. AI GENERATED RESULT SCREEN -->
+    <div id="result-screen" class="screen hidden">
+        <div class="top-header">
+            <div class="back-btn" onclick="goToScreen('dashboard-screen')">←</div>
+            <div class="header-title">Review & Edit</div>
+            <div style="color: #6d28d9; font-size: 14px; font-weight: 600;">Save Draft</div>
+        </div>
+        <div class="result-content">
+            <div class="tabs">
+                <div class="tab active">All</div>
+                <div class="tab">Images</div>
+                <div class="tab">SEO</div>
+                <div class="tab">Pricing</div>
+                <div class="tab">Details</div>
+            </div>
+
+            <div class="section-row">
+                <h3>Generated Images</h3>
+                <span>See All ></span>
+            </div>
+
+            <div class="img-grid">
+                <!-- Using placeholder images for the demo -->
+                <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=500&q=80" class="main-img">
+                <div class="side-imgs">
+                    <img src="https://images.unsplash.com/photo-1581655353564-df123a1eb820?auto=format&fit=crop&w=300&q=80" class="sub-img">
+                    <img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=300&q=80" class="sub-img">
+                </div>
+            </div>
+
+            <div class="seo-box">
+                <h4>SEO Title</h4>
+                <p>Premium Cotton Men's T-Shirt – Soft, Stylish & Durable</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- GLOBAL BOTTOM NAVIGATION -->
+    <div id="global-nav" class="hidden">
+        <div class="nav-item active" onclick="goToScreen('dashboard-screen')"><div class="nav-icon">🏠</div>Home</div>
+        <div class="nav-item"><div class="nav-icon">🛍️</div>Products</div>
+        <div class="nav-fab-container" onclick="goToScreen('upload-screen')"><div class="nav-fab">+</div></div>
+        <div class="nav-item"><div class="nav-icon">📋</div>Orders</div>
+        <div class="nav-item"><div class="nav-icon">👤</div>Profile</div>
+    </div>
+
+    <!-- MAGIC JAVASCRIPT FOR NAVIGATION -->
     <script>
-        // EXACTLY 2 Seconds Splash Screen Logic
+        // Start: Splash Screen Timer
         setTimeout(() => {
             document.getElementById('splash-screen').classList.add('hidden');
             document.getElementById('dashboard-screen').classList.remove('hidden');
+            document.getElementById('global-nav').classList.remove('hidden'); // Show bottom nav
         }, 2000);
 
-        // Screen Navigation Logic
-        function openUploadScreen() {
-            document.getElementById('dashboard-screen').classList.add('hidden');
-            document.getElementById('upload-screen').classList.remove('hidden');
-            window.scrollTo(0, 0); 
+        // Function to smoothly switch between any screens
+        function goToScreen(targetScreenId) {
+            // Hide all screens
+            const screens = document.querySelectorAll('.screen');
+            screens.forEach(screen => screen.classList.add('hidden'));
+            
+            // Show the target screen
+            document.getElementById(targetScreenId).classList.remove('hidden');
+            window.scrollTo(0, 0); // Scroll back to top
         }
 
-        function closeUploadScreen() {
-            document.getElementById('upload-screen').classList.add('hidden');
-            document.getElementById('dashboard-screen').classList.remove('hidden');
-        }
-
-        // Native Image Preview Logic
-        function handleImage(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('preview-image').src = e.target.result;
-                    document.getElementById('dashed-box').style.display = 'none';
-                    document.getElementById('img-preview-box').style.display = 'block';
-                }
-                reader.readAsDataURL(file);
-            }
+        // Function to simulate AI processing time
+        function startAIGeneration() {
+            goToScreen('generating-screen');
+            
+            // Wait 3.5 seconds to simulate API loading, then go to Result screen
+            setTimeout(() => {
+                goToScreen('result-screen');
+            }, 3500);
         }
     </script>
 
