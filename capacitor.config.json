@@ -2,9 +2,5 @@
   "appId": "com.pavey.ai.dropship",
   "appName": "Pavey AI",
   "webDir": "dist",
-  "bundledWebRuntime": false,
-  "server": {
-    "url": "https://pavey-ai-dropship-pro.onrender.com",
-    "cleartext": true
-  }
+  "bundledWebRuntime": false
 }
