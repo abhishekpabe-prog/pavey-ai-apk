@@ -24,7 +24,9 @@ jobs:
           java-version: '17'
 
       - name: Install Dependencies
-        run: npm install
+        run: |
+          npm install
+          npm install @capacitor/android
 
       - name: Add Capacitor Android
         run: |
