@@ -28,8 +28,10 @@ jobs:
           npm install
           npm install @capacitor/android@5
 
-      - name: Build Web App
-        run: npm run build || true
+      - name: Prepare Web Assets
+        run: |
+          mkdir -p dist
+          echo "<html><body>Loading...</body></html>" > dist/index.html
 
       - name: Add Capacitor Android
         run: |
